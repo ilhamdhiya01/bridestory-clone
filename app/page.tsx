@@ -1,3 +1,3 @@
 export default function Home() {
-  return <>Hello Bridestory Clone</>;
+  return <>Hello Bridestory</>;
 }
