@@ -2,7 +2,7 @@
 
 import Container from '../../Container';
 import { HiDotsHorizontal } from 'react-icons/hi';
-import CategoryItem from './CategoryItem';
+import CategoryList from './CategoryList';
 
 const VendorRecomendation = () => {
   return (
@@ -14,9 +14,7 @@ const VendorRecomendation = () => {
         </div>
       </Container>
       <div className='overflow-x-hidden'>
-        <div className='w-full flex flex-row items-center overflow-x-auto no-scrollbar mt-3'>
-          <CategoryItem />
-        </div>
+        <CategoryList />
       </div>
     </>
   );
