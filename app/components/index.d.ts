@@ -5,3 +5,8 @@ export type MenuItemProps = {
   icon: IconType;
   link: string;
 };
+
+export type CarouselItemProps = {
+  img: string;
+  alt: string;
+};
