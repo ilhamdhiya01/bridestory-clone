@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Figtree } from 'next/font/google';
 import Navbar from './components/navbar/Navbar';
 import Menu from './components/navbar/Menu';
+import Modal from './components/modal/Modal';
 
 const figtree = Figtree({ subsets: ['latin'] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en'>
       <body className={`${figtree.className} w-full min-h-screen box-border`}>
         <>
+          <Modal />
           <Navbar />
           <Menu />
         </>

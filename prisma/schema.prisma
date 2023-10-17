@@ -50,3 +50,10 @@ model Option {
   
   users User[]
 }
+
+model Category {
+  id Int @id @default(autoincrement())
+  categoryName String
+  description String?
+  image String?
+}
