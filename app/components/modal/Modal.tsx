@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { ModalProps } from '..';
 
-const Modal: React.FC<ModalProps> = ({ onClose, isOpen, body }) => {
+const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('overflow-hidden');
@@ -44,7 +44,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, isOpen, body }) => {
           <div
             className={`
             transition
-            duration-300
+            duration-700
             h-full 
             w-full
             ${isOpen ? 'translate-y-0' : '-translate-y-full'}
@@ -64,7 +64,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, isOpen, body }) => {
                 no-scrollbar
               '
             >
-              {body}
+              <div>{body}</div>
             </div>
           </div>
         </div>

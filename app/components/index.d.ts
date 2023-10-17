@@ -7,15 +7,20 @@ export type MenuItemProps = {
 };
 
 export type ModalProps = {
-  isOpen?: boolean;
+  isOpen: boolean;
   onClose: () => void;
-  onSubmit: () => void;
-  title?: string;
-  body?: React.ReactElement;
-  footer?: React.ReactElement;
-  header?: React.ReactElement;
-  actionLabel: string;
-  disabled?: boolean;
-  secondaryAction?: () => void;
-  secondaryActionLabel?: string;
+  body: React.ReactElement;
+};
+
+export type CategoryProps = {
+  categoryName: string;
+  id: number;
+  selected: boolean;
+};
+
+export type VendorRecomendationItemProps = {
+  categoryName: string;
+  id: number;
+  onSelected: () => void;
+  selected: boolean;
 };
