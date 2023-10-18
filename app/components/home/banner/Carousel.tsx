@@ -63,7 +63,7 @@ const Carousel = () => {
         spaceBetween={10}
         slidesPerView={1}
         onSlideChange={(swiper) => console.log('slide')}
-        className='w-full h-[170px]'
+        className='w-full h-[165px]'
       >
         {images.map((image) => (
           <SwiperSlide key={image.imageAlt}>

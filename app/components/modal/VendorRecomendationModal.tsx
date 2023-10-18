@@ -5,6 +5,7 @@ import Modal from './Modal';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 import Container from '../Container';
 import CategoryList from '../home/vendorRecomendation/VendorRecomendationList';
+import Button from '../Button';
 
 const VendorRecomendationModal = () => {
   const { isOpen, onClose } = useHomeStore();
@@ -18,6 +19,9 @@ const VendorRecomendationModal = () => {
         </div>
         <div className='mt-4'>
           <CategoryList />
+        </div>
+        <div className='mt-3'>
+          <Button label='Selesai' onClick={onClose} />
         </div>
       </Container>
     </div>

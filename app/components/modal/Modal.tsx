@@ -26,7 +26,7 @@ const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body }) => {
           z-20
           bg-neutral-800/70
           transition
-          duration-300
+          duration-1000
           ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
         `}
       >
@@ -44,7 +44,7 @@ const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body }) => {
           <div
             className={`
             transition
-            duration-700
+            duration-500
             h-full 
             w-full
             ${isOpen ? 'translate-y-0' : '-translate-y-full'}
