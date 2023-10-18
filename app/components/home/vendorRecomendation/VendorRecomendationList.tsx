@@ -3,9 +3,19 @@ import axios from 'axios';
 import VendorRecomendationItem from './VendorRecomendationItem';
 import { useCallback, useEffect, useState } from 'react';
 import { CategoryProps } from '../..';
+import { useHomeStore } from '@/app/store/home/HomeStore';
 
-const CategoryList = () => {
+const VendorRecomendationList = () => {
   const [categories, setCategories] = useState<CategoryProps[]>([]);
+  const indicesToKeep = [0, 1, 2];
+  const selected = categories.filter((item, index) => indicesToKeep.includes(index));
+  console.log(
+    selected.map((item) => ({
+      ...item,
+      selected: true,
+    }))
+  );
+  const { isOpen } = useHomeStore();
 
   const fetchAllCategory = async () => {
     const response = await axios.get('/api/category');
@@ -14,7 +24,7 @@ const CategoryList = () => {
 
   useEffect(() => {
     fetchAllCategory();
-  }, []);
+  }, [isOpen]);
 
   const handleSelected = useCallback(
     (index: number) => {
@@ -34,4 +44,4 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+export default VendorRecomendationList;
