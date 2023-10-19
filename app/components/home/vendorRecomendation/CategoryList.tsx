@@ -1,14 +1,6 @@
-// // import CategoryItem from './CategoryItem';
-// import { PrismaClient } from '@prisma/client';
+// 'use client';
 
 // const CategoryList = async () => {
-//   const prisma = new PrismaClient();
-//   const categories = await prisma.category.findMany({
-//     select: {
-//       categoryName: true,
-//       id: true,
-//     },
-//   });
 //   return (
 //     <div className='w-full flex flex-row items-center overflow-x-auto no-scrollbar mt-3'>
 //       {categories.map((category) => (

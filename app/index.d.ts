@@ -21,8 +21,8 @@ export type CategoryProps = {
 export type VendorRecomendationItemProps = {
   categoryName: string;
   id: number;
-  onSelected: () => void;
-  selected: boolean;
+  onSelected?: () => void;
+  selected?: boolean;
 };
 
 export interface ButtonProps {

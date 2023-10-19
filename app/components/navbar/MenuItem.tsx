@@ -1,5 +1,5 @@
 'use client';
-import { MenuItemProps } from '..';
+import { MenuItemProps } from '../..';
 import Link from 'next/link';
 
 const MenuItem: React.FC<MenuItemProps> = ({ label, icon: Icon, link }) => {

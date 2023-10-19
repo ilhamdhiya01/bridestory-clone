@@ -1,6 +1,5 @@
 'use client';
-
-import { VendorRecomendationItemProps } from '../..';
+import { VendorRecomendationItemProps } from '../../..';
 
 const VendorRecomendationItem: React.FC<VendorRecomendationItemProps> = ({ onSelected, categoryName, id, selected }) => {
   return (

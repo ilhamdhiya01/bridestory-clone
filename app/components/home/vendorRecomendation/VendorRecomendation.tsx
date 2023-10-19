@@ -2,11 +2,22 @@
 
 import Container from '../../Container';
 import { HiDotsHorizontal } from 'react-icons/hi';
-import CategoryList from './VendorRecomendationList';
 import { useHomeStore } from '@/app/store/home/HomeStore';
+import VendorRecomendationList from './VendorRecomendationList';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const VendorRecomendation = () => {
-  const { onOpen } = useHomeStore();
+  const { onOpen, setCategories } = useHomeStore();
+  useEffect(() => {
+    const fetchAllCategory = async () => {
+      const response = await axios.get('/api/category');
+      setCategories(response.data);
+    };
+    fetchAllCategory();
+    console.log('render');
+  }, []);
+
   return (
     <>
       <Container>
@@ -15,7 +26,11 @@ const VendorRecomendation = () => {
           <HiDotsHorizontal size={25} onClick={onOpen} className='text-neutral-400 cursor-pointer' />
         </div>
       </Container>
-      <div className='overflow-x-hidden'>{/* <CategoryList /> */}</div>
+      <div className='overflow-x-hidden'>
+        <div className='w-full overflow-x-auto no-scrollbar'>
+          <VendorRecomendationList />
+        </div>
+      </div>
     </>
   );
 };

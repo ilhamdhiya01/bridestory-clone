@@ -1,45 +1,22 @@
 'use client';
-import axios from 'axios';
-import VendorRecomendationItem from './VendorRecomendationItem';
-import { useCallback, useEffect, useState } from 'react';
-import { CategoryProps } from '../..';
+
+import CategoryItem from './CategoryItem';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 
 const VendorRecomendationList = () => {
-  const [categories, setCategories] = useState<CategoryProps[]>([]);
-  const indicesToKeep = [0, 1, 2];
-  const selected = categories.filter((item, index) => indicesToKeep.includes(index));
-  console.log(
-    selected.map((item) => ({
-      ...item,
-      selected: true,
-    }))
-  );
-  const { isOpen } = useHomeStore();
+  const { vendorSelected } = useHomeStore();
 
-  const fetchAllCategory = async () => {
-    const response = await axios.get('/api/category');
-    setCategories(response.data);
-  };
-
-  useEffect(() => {
-    fetchAllCategory();
-  }, [isOpen]);
-
-  const handleSelected = useCallback(
-    (index: number) => {
-      const updatedCategories = [...categories];
-      updatedCategories[index].selected = !updatedCategories[index].selected;
-      setCategories(updatedCategories);
-    },
-    [categories, setCategories]
-  );
+  if (vendorSelected === undefined || vendorSelected === null) {
+    return;
+  }
 
   return (
-    <div className='flex flex-wrap gap-2'>
-      {categories.map((category, index) => (
-        <VendorRecomendationItem key={category.id} selected={category.selected} onSelected={() => handleSelected(index)} categoryName={category.categoryName} id={category.id} />
-      ))}
+    <div className='overflow-x-hidden'>
+      <div className='w-full gap-2 flex flex-row items-center overflow-x-auto no-scrollbar'>
+        {vendorSelected.map((category) => (
+          <CategoryItem key={category.id} categoryName={category.categoryName} />
+        ))}
+      </div>
     </div>
   );
 };

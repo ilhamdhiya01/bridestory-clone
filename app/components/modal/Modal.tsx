@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { ModalProps } from '..';
+import { ModalProps } from '../..';
 
 const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body }) => {
   useEffect(() => {
