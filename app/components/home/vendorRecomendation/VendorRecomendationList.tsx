@@ -2,6 +2,7 @@
 
 import CategoryItem from './CategoryItem';
 import { useHomeStore } from '@/app/store/home/HomeStore';
+import SliderMobileVersion from '../../SliderMobileVersion';
 
 const VendorRecomendationList = () => {
   const { vendorSelected } = useHomeStore();
@@ -11,13 +12,11 @@ const VendorRecomendationList = () => {
   }
 
   return (
-    <div className='overflow-x-hidden'>
-      <div className='w-full gap-2 flex flex-row items-center overflow-x-auto no-scrollbar'>
-        {vendorSelected.map((category) => (
-          <CategoryItem key={category.id} categoryName={category.categoryName} />
-        ))}
-      </div>
-    </div>
+    <SliderMobileVersion>
+      {vendorSelected.map((category) => (
+        <CategoryItem key={category.id} categoryName={category.categoryName} />
+      ))}
+    </SliderMobileVersion>
   );
 };
 

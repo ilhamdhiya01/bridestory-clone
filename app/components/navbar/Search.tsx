@@ -5,15 +5,15 @@ import { useState, useCallback } from 'react';
 import Link from 'next/link';
 
 const RightListMenu = () => (
-  <div className='flex flex-ro items-center gap-6 text-neutral-600'>
+  <div className='flex flex-ro items-center gap-5 text-neutral-600'>
     <Link href={'/'}>
-      <BsBagHeart />
+      <BsBagHeart size={17} />
     </Link>
     <Link href={'/'}>
-      <BsBell />
+      <BsBell size={17} />
     </Link>
     <Link href={'/'}>
-      <BsChatSquareDots />
+      <BsChatSquareDots size={17} />
     </Link>
   </div>
 );

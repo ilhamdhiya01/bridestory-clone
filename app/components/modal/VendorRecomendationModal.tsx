@@ -10,14 +10,14 @@ import VendorRecomendationItem from '../home/vendorRecomendation/VendorRecomenda
 import { CategoryProps } from '@/app';
 
 const VendorRecomendationModal = () => {
-  const { isOpen, onClose, categories, setCategories, setVendorSelected } = useHomeStore();
+  const { isOpen, onClose, categories, setCategories, setVendorSelected, vendorSelected } = useHomeStore();
   const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
 
   useEffect(() => {
     setVendorSelected(storageVedorSelected);
   }, [storageVedorSelected]);
 
-  const handleSave = (id: number) => {
+  const handleVendorSelected = (id: number) => {
     const clicked = categories.find((item) => item.id === id);
     if (clicked) {
       if (storageVedorSelected.some((category) => category.id === id)) {
@@ -30,15 +30,14 @@ const VendorRecomendationModal = () => {
     }
   };
 
-  const handleSelected = useCallback(
-    (index: number) => {
-      const updatedCategories = [...categories];
-      updatedCategories[index].selected = !updatedCategories[index].selected;
-      setCategories(updatedCategories);
-      handleSave(updatedCategories[index].id);
-    },
-    [categories, setCategories]
-  );
+  // handle select category and change bg when category selected
+  const handleSelected = (index: number) => {
+    const updatedCategories = [...categories];
+    updatedCategories[index].selected = !updatedCategories[index].selected;
+    setCategories(updatedCategories);
+    // get data category selected and store to localStorage
+    handleVendorSelected(updatedCategories[index].id);
+  };
 
   const body = (
     <div onClick={(e) => e.stopPropagation()} className='py-3'>

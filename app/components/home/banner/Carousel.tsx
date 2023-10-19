@@ -19,31 +19,31 @@ const pagination = {
 
 const images = [
   {
-    imageUrl: '/images/bs-concierge-2_hpb-1200x400-3-52jVY-FMx.webp',
+    imageUrl: '/images/banner/bs-concierge-2_hpb-1200x400-3-52jVY-FMx.webp',
     imageAlt: 'image 1',
   },
   {
-    imageUrl: '/images/golden-rama-wedding-hpb-1-ipZy2LhL9.webp',
+    imageUrl: '/images/banner/golden-rama-wedding-hpb-1-ipZy2LhL9.webp',
     imageAlt: 'image 2',
   },
   {
-    imageUrl: '/images/hilda-package-homepage-i-3-paF1AKZdw.webp',
+    imageUrl: '/images/banner/hilda-package-homepage-i-3-paF1AKZdw.webp',
     imageAlt: 'image 3',
   },
   {
-    imageUrl: '/images/hpb-bs-pay-1-5Kzl6UbP8.webp',
+    imageUrl: '/images/banner/hpb-bs-pay-1-5Kzl6UbP8.webp',
     imageAlt: 'image 4',
   },
   {
-    imageUrl: '/images/kejar-diskon-2-EW1T6w9IV.webp',
+    imageUrl: '/images/banner/kejar-diskon-2-EW1T6w9IV.webp',
     imageAlt: 'image 5',
   },
   {
-    imageUrl: '/images/wedding-checklist-3-x9ehgmIJn.webp',
+    imageUrl: '/images/banner/wedding-checklist-3-x9ehgmIJn.webp',
     imageAlt: 'image 6',
   },
   {
-    imageUrl: '/images/wedding-site_hpb-1200x400-1-MLresrw-5.webp',
+    imageUrl: '/images/banner/wedding-site_hpb-1200x400-1-MLresrw-5.webp',
     imageAlt: 'image 7',
   },
 ];
@@ -57,6 +57,10 @@ const Carousel = () => {
           enabled: true,
           nextEl: '.swiper-button-prev',
           prevEl: '.swiper-button-next',
+        }}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: true,
         }}
         pagination={pagination}
         modules={[Pagination, Navigation]}
