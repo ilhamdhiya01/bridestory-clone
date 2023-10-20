@@ -3,13 +3,15 @@
 import Container from '../../Container';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { useHomeStore } from '@/app/store/home/HomeStore';
+import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
 import VendorRecomendationList from './VendorRecomendationList';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { CategoryProps } from '@/app';
 
 const VendorRecomendation = () => {
-  const { onOpen, setCategories, vendorSelected, categories } = useHomeStore();
+  const { onOpen } = useVendorRecomendationModal();
+  const { setCategories, vendorSelected, categories } = useHomeStore();
 
   useEffect(() => {
     const fetchAllCategory = async () => {
@@ -17,7 +19,7 @@ const VendorRecomendation = () => {
       setCategories(response.data);
     };
     fetchAllCategory();
-  }, []);
+  }, [setCategories]);
 
   // check vendor selected from localStorage and set selected vendor to true
   const checkVendorSelected = () => {

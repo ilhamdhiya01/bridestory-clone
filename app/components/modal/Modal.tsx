@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { ModalProps } from '../..';
 
-const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body }) => {
+const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body, filter }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('overflow-hidden');
@@ -47,13 +47,14 @@ const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body }) => {
             transition
             duration-300
             ease-in-out
-            h-full 
             w-full
-            ${isOpen ? 'translate-y-0' : '-translate-y-full'}
+            h-full
+            ${isOpen ? (filter ? 'translate-y-[475px]' : 'translate-y-0') : filter ? 'translate-y-full' : '-translate-y-full'}
             ${isOpen ? 'opacity-100' : 'opacity-0'}
           `}
           >
             <div
+              onClick={(e) => e.stopPropagation()}
               className='
                 relative
                 bg-white

@@ -10,6 +10,7 @@ export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   body: React.ReactElement;
+  filter: boolean;
 };
 
 export type CategoryProps = {
@@ -27,7 +28,7 @@ export type VendorRecomendationItemProps = {
 
 export interface ButtonProps {
   label: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   outline?: boolean;
   small?: boolean;

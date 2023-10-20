@@ -4,8 +4,10 @@ import { HiDotsHorizontal } from 'react-icons/hi';
 import Container from '../../Container';
 import VendorCategoryItem from './VendorCategoryItem';
 import SliderMobileVersion from '../../SliderMobileVersion';
+import { useFilterVendorModal } from '@/app/hooks/useFilterVendorModal';
 
 const VendorCategory = () => {
+  const { onOpen } = useFilterVendorModal();
   return (
     <>
       <Container>
@@ -16,7 +18,7 @@ const VendorCategory = () => {
               Lihat Rekomendasi dengan <b>semua</b> budget
             </p>
           </div>
-          <HiDotsHorizontal size={25} className='text-neutral-400 cursor-pointer' />
+          <HiDotsHorizontal onClick={onOpen} size={25} className='text-neutral-400 cursor-pointer' />
         </div>
       </Container>
       <div className='mt-4'>

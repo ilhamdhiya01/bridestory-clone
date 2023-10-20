@@ -3,6 +3,7 @@
 import { useCallback, useEffect } from 'react';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
+import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
 import Modal from './Modal';
 import Container from '../Container';
 import Button from '../Button';
@@ -10,12 +11,13 @@ import VendorRecomendationItem from '../home/vendorRecomendation/VendorRecomenda
 import { CategoryProps } from '@/app';
 
 const VendorRecomendationModal = () => {
-  const { isOpen, onClose, categories, setCategories, setVendorSelected, vendorSelected } = useHomeStore();
+  const { isOpen, onClose } = useVendorRecomendationModal();
+  const { categories, setCategories, setVendorSelected, vendorSelected } = useHomeStore();
   const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
 
   useEffect(() => {
     setVendorSelected(storageVedorSelected);
-  }, [storageVedorSelected]);
+  }, [storageVedorSelected, setVendorSelected]);
 
   const handleVendorSelected = (id: number) => {
     const clicked = categories.find((item) => item.id === id);
@@ -40,7 +42,7 @@ const VendorRecomendationModal = () => {
   };
 
   const body = (
-    <div onClick={(e) => e.stopPropagation()} className='py-3'>
+    <div className='py-3'>
       <Container>
         <div className='flex flex-col gap-2'>
           <h3 className='font-semibold text-[21px]'>Atur kategori di halaman Bridestory Anda</h3>
