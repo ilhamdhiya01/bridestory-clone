@@ -4,7 +4,7 @@ import VendorRecomendation from './components/home/vendorRecomendation/VendorRec
 
 export default function Home() {
   return (
-    <div className='mt-14 bg-white h-full'>
+    <div className='mt-14 bg-white'>
       <Banner />
       <div className='mt-8'>
         <VendorRecomendation />
@@ -12,6 +12,18 @@ export default function Home() {
       <div className='mt-8'>
         <VendorCategory />
       </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }

@@ -23,7 +23,7 @@ const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body, filter })
           items-center
           overflow-hidden
           inset-0
-          z-20
+          z-50
           bg-neutral-800/70
           transition
           duration-300
@@ -49,7 +49,7 @@ const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body, filter })
             ease-in-out
             w-full
             h-full
-            ${isOpen ? (filter ? 'translate-y-[475px]' : 'translate-y-0') : filter ? 'translate-y-full' : '-translate-y-full'}
+            ${isOpen ? (filter ? 'translate-y-56' : 'translate-y-0') : filter ? 'translate-y-full' : '-translate-y-full'}
             ${isOpen ? 'opacity-100' : 'opacity-0'}
           `}
           >
@@ -65,9 +65,10 @@ const Modal: React.FC<Partial<ModalProps>> = ({ onClose, isOpen, body, filter })
                 shadow-lg
                 overflow-y-auto
                 no-scrollbar
+                rounded-t-lg
               '
             >
-              <div>{body}</div>
+              {body}
             </div>
           </div>
         </div>
