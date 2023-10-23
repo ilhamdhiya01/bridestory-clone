@@ -204,9 +204,9 @@ const FilterVendorModal = () => {
             <Loading />
           ) : (
             <ul className='mt-[90px] divide-y'>
-              <li className='flex justify-between items-center py-3 px-4'>
+              {/* <li className='flex justify-between items-center py-3 px-4'>
                 <span className='text-sm text-[#252525]'>Semua Kota</span>
-              </li>
+              </li> */}
               {cities.map((city, index) => (
                 <CityItem key={index} cityName={city.cityName} selected={city.selected} onSelected={() => handleSelectCity(city.cityName, index)} />
               ))}
