@@ -15,6 +15,7 @@ type Country = {
 type City = {
   cityName: string;
   adminName1: string;
+  selected: boolean;
 };
 
 type FilterVendorState = {
