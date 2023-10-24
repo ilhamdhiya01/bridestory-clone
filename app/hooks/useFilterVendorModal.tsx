@@ -23,6 +23,7 @@ type FilterVendorState = {
   filters: Filter;
   countries: Country[];
   cities: City[];
+  citySelected: boolean;
 };
 
 type FilterVendorAction = {
@@ -44,6 +45,7 @@ const initialValue: FilterVendorState = {
   },
   countries: [],
   cities: [],
+  citySelected: false,
 };
 
 export const useFilterVendorModal = create<FilterVendorStore>((set) => ({
@@ -53,4 +55,5 @@ export const useFilterVendorModal = create<FilterVendorStore>((set) => ({
   setFilter: (data) => set({ filters: data }),
   setCountries: (data) => set({ countries: data }),
   setCites: (data) => set({ cities: data }),
+  setCitySelected: () => set((state) => ({ citySelected: !state.citySelected })),
 }));

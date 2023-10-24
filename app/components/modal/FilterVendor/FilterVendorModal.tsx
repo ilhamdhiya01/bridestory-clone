@@ -38,6 +38,7 @@ const FilterVendorModal = () => {
 
   const onBackSelectFilter = () => {
     setStep(STEPS.SELECT_FILTER);
+    setCitySelected(false);
   };
 
   const onSelectCountry = () => {
@@ -54,11 +55,14 @@ const FilterVendorModal = () => {
     const selectedCities = [...cities];
     selectedCities[index].selected = !selectedCities[index].selected;
     if (selectedCities[index].selected) {
+      setCitySelected(true);
       selectedCities.forEach((city, i) => {
         if (i !== index) {
           city.selected = false;
         }
       });
+    } else {
+      setCitySelected(false);
     }
     setCites(selectedCities);
     setFilter({ ...filters, city: cityName });
@@ -126,7 +130,7 @@ const FilterVendorModal = () => {
               Ubah lokasi <span>Venue</span>
             </h2>
             <div className='flex items-center' onClick={onSelectCountry}>
-              <span className='text-[#aaaaaa] font-semibold'>{filters.city === 'Semua Kota' ? filters.country : filters.city}</span>
+              <span className='text-[#aaaaaa] font-semibold'>{filters.city === 'Semua Kota' || filters.city === '' ? filters.country : filters.city}</span>
               <FaChevronRight className='text-[#aaaaaa]' />
             </div>
           </div>
@@ -192,7 +196,9 @@ const FilterVendorModal = () => {
           <div className='flex justify-between items-center py-3 relative'>
             <FaChevronLeft size={18} onClick={onSelectCountry} className='text-[#848484]' />
             <h3 className='text-xl text-[#444444] font-bold'>City</h3>
-            <span className='text-lg text-[#AAAAAA]'>Apply</span>
+            <span onClick={onBackSelectFilter} className={`cursor-pointer font-semibold transition duration-150  text-lg ${citySelected ? 'text-[#eba1a1]' : 'text-[#AAAAAA]'}`}>
+              Apply
+            </span>
           </div>
           <div className='flex flex-row items-center bg-white gap-2 drop-shadow-md rounded-md overflow-hidden px-3'>
             <BsSearch className='shrink-0' size={15} />
