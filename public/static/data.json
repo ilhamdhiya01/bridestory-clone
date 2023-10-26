@@ -1,0 +1,16 @@
+{
+  "budgets": [
+    {
+      "price": "All Budget"
+    },
+    {
+      "price": "$"
+    },
+    {
+      "price": "$$"
+    },
+    {
+      "price": "$$$"
+    }
+  ]
+}

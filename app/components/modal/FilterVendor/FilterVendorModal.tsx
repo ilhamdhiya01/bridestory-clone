@@ -3,7 +3,8 @@
 import { AiOutlineClose } from 'react-icons/ai';
 import Modal from '../Modal';
 import { useFilterVendorModal } from '@/app/hooks/useFilterVendorModal';
-import { FaCheck, FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import { useGlobalStore } from '@/app/store/GlobalStore';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import Container from '../../Container';
 import Button from '../../Button';
 import { useEffect, useState } from 'react';
@@ -11,6 +12,7 @@ import axios from 'axios';
 import Loading from '../../Loading';
 import { BsSearch } from 'react-icons/bs';
 import CityItem from './CityItem';
+import CountryItem from './CountryItem';
 
 enum STEPS {
   SELECT_FILTER = 0,
@@ -22,10 +24,8 @@ enum STEPS {
 const FilterVendorModal = () => {
   const [step, setStep] = useState(STEPS.SELECT_FILTER);
   const [countryCode, setCountryCode] = useState('ID');
-  const [citySelected, setCitySelected] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { isOpen, onClose, filters, setFilter, countries, cities, setCountries, setCites } = useFilterVendorModal();
-  const budgetList = ['All Budget', '$', '$$', '$$$'];
+  const { isLoading, setLoading } = useGlobalStore();
+  const { isOpen, onClose, filters, setFilter, countries, cities, setCountries, setCites, setBudgets, budgets, citySelected, setCitySelected } = useFilterVendorModal();
 
   const handleSetBudget = (budget: string) => {
     setFilter({ ...filters, budget: budget });
@@ -54,6 +54,8 @@ const FilterVendorModal = () => {
   const handleSelectCity = (cityName: string, index: number) => {
     const selectedCities = [...cities];
     selectedCities[index].selected = !selectedCities[index].selected;
+    setCites(selectedCities);
+    setFilter({ ...filters, city: cityName });
     if (selectedCities[index].selected) {
       setCitySelected(true);
       selectedCities.forEach((city, i) => {
@@ -64,15 +66,13 @@ const FilterVendorModal = () => {
     } else {
       setCitySelected(false);
     }
-    setCites(selectedCities);
-    setFilter({ ...filters, city: cityName });
   };
 
   useEffect(() => {
     const fetchCountries = async () => {
       const response = await axios.get(`https://restcountries.com/v3.1/all`);
       if (response.status === 200) {
-        setIsLoading(false);
+        setLoading(false);
       }
       const transformedCountries = response.data.map((country: any) => ({
         countryName: country.name.common,
@@ -87,7 +87,7 @@ const FilterVendorModal = () => {
     const fetchCities = async () => {
       const response = await axios.get(`http://api.geonames.org/searchJSON?country=${countryCode}&username=ilhamdhiya01`);
       if (response.status === 200) {
-        setIsLoading(false);
+        setLoading(false);
       }
       const transformedCities = response.data.geonames.map((city: any) => ({
         cityName: city.name,
@@ -98,15 +98,24 @@ const FilterVendorModal = () => {
 
       setCites(transformedCities);
     };
-    setIsLoading(true);
+
+    const fetchBudget = async () => {
+      const response = await axios.get('/static/data.json');
+      setBudgets(response.data.budgets);
+    };
+
+    setLoading(true);
+
+    if (step === STEPS.BUDGET) {
+      fetchBudget();
+    }
     if (step === STEPS.COUNTRY) {
       fetchCountries();
     }
-
     if (step === STEPS.CITY) {
       fetchCities();
     }
-  }, [step, countryCode, setCites, setCountries]);
+  }, [step, countryCode, setCites, setCountries, setBudgets, setLoading]);
 
   let bodyContent = (
     <div className='h-full'>
@@ -151,9 +160,9 @@ const FilterVendorModal = () => {
         </div>
         <div>
           <ul>
-            {budgetList.map((budget, index) => (
-              <li key={index} onClick={() => handleSetBudget(budget)} className='border-b py-4 px-4'>
-                <span className='text-sm text-[#252525]'>{budget}</span>
+            {budgets.map((budget, index) => (
+              <li key={index} onClick={() => handleSetBudget(budget.price)} className='border-b py-4 px-4'>
+                <span className='text-sm text-[#252525]'>{budget.price}</span>
               </li>
             ))}
           </ul>
@@ -175,14 +184,11 @@ const FilterVendorModal = () => {
           {isLoading ? (
             <Loading />
           ) : (
-            <ul className='mt-14 divide-y border h-full'>
+            <div className='mt-14 divide-y border h-full'>
               {countries.map((country, index) => (
-                <li key={index} onClick={() => handleSetCountryCode(country.countryCode, country.countryName)} className='flex justify-between items-center py-3 px-4'>
-                  <span className='text-sm text-[#252525]'>{country.countryName}</span>
-                  <FaChevronRight size={15} className='text-[#aaaaaa]' />
-                </li>
+                <CountryItem key={index} countryName={country.countryName} onSelected={() => handleSetCountryCode(country.countryCode, country.countryName)} />
               ))}
-            </ul>
+            </div>
           )}
         </div>
       </div>
@@ -209,14 +215,14 @@ const FilterVendorModal = () => {
           {isLoading ? (
             <Loading />
           ) : (
-            <ul className='mt-[90px] divide-y'>
+            <div className='mt-[90px] divide-y'>
               {/* <li className='flex justify-between items-center py-3 px-4'>
                 <span className='text-sm text-[#252525]'>Semua Kota</span>
               </li> */}
               {cities.map((city, index) => (
                 <CityItem key={index} cityName={city.cityName} selected={city.selected} onSelected={() => handleSelectCity(city.cityName, index)} />
               ))}
-            </ul>
+            </div>
           )}
         </div>
       </div>

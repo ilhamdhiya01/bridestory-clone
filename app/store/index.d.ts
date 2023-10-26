@@ -11,3 +11,13 @@ export type HomeAction = {
 };
 
 export type HomeStore = HomeState & HomeAction;
+
+export type GlobalState = {
+  isLoading: boolean;
+};
+
+export type GlobalAction = {
+  setLoading: (data: boolean) => void;
+};
+
+export type GlobalStore = GlobalState & GlobalAction;

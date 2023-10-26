@@ -5,18 +5,16 @@ import Container from '../../Container';
 import VendorCategoryItem from './VendorCategoryItem';
 import SliderMobileVersion from '../../SliderMobileVersion';
 import { useFilterVendorModal } from '@/app/hooks/useFilterVendorModal';
-import axios from 'axios';
-import { useEffect } from 'react';
 
 const VendorCategory = () => {
-  const { onOpen, filters, cities, setCites } = useFilterVendorModal();
+  const { onOpen, filters } = useFilterVendorModal();
 
   return (
     <>
       <Container>
         <div className='flex justify-between'>
           <div className='flex flex-col'>
-            <h2 className='text-lg font-bold text-[#252525]'>Wedding Planning di Semarang</h2>
+            <h2 className='text-lg font-bold text-[#252525]'>Wedding Planning di {filters.city}</h2>
             <p className='text-xs text-[#555555]'>
               Lihat Rekomendasi dengan <b>{filters.budget === 'All Budget' ? 'Semua' : filters.budget}</b> budget
             </p>
