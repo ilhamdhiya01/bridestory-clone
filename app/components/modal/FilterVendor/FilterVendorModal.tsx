@@ -13,6 +13,7 @@ import Loading from '../../Loading';
 import { BsSearch } from 'react-icons/bs';
 import CityItem from './CityItem';
 import CountryItem from './CountryItem';
+import BudgetItem from './BudgetItem';
 
 enum STEPS {
   SELECT_FILTER = 0,
@@ -25,12 +26,8 @@ const FilterVendorModal = () => {
   const [step, setStep] = useState(STEPS.SELECT_FILTER);
   const [countryCode, setCountryCode] = useState('ID');
   const { isLoading, setLoading } = useGlobalStore();
-  const { isOpen, onClose, filters, setFilter, countries, cities, setCountries, setCites, setBudgets, budgets, citySelected, setCitySelected } = useFilterVendorModal();
-
-  const handleSetBudget = (budget: string) => {
-    setFilter({ ...filters, budget: budget });
-    onBackSelectFilter();
-  };
+  const [searchCity, setSearchCity] = useState('');
+  const { isOpen, onClose, filters, setFilter, countries, cities, setCountries, setCites, setBudgets, budgets, citySelected, setCitySelected, setBudgetSelected, budgetSelected } = useFilterVendorModal();
 
   const onSelectBudget = () => {
     setStep(STEPS.BUDGET);
@@ -49,6 +46,7 @@ const FilterVendorModal = () => {
     setCountryCode(countryCode);
     setStep(STEPS.CITY);
     setFilter({ ...filters, country: countryName });
+    setSearchCity('');
   };
 
   const handleSelectCity = (cityName: string, index: number) => {
@@ -65,6 +63,23 @@ const FilterVendorModal = () => {
       });
     } else {
       setCitySelected(false);
+    }
+  };
+
+  const handleSetBudget = (budget: string, index: number, budgetId: number) => {
+    const selectedBudget = [...budgets];
+    selectedBudget[index].selected = !selectedBudget[index].selected;
+    setFilter({ ...filters, budget: budget });
+    onBackSelectFilter();
+    if (selectedBudget[index].selected) {
+      setBudgetSelected(true);
+      selectedBudget.forEach((budget, i) => {
+        if (i !== index) {
+          budget.selected = false;
+        }
+      });
+    } else {
+      setBudgetSelected(false);
     }
   };
 
@@ -101,7 +116,19 @@ const FilterVendorModal = () => {
 
     const fetchBudget = async () => {
       const response = await axios.get('/static/data.json');
-      setBudgets(response.data.budgets);
+      // check if budget already selected set selected budget to be true
+      if (budgets.length !== 0) {
+        const checkSelectedBudget = budgets.map((budget) => {
+          if (budget.price === filters.budget) {
+            return { ...budget, selected: true };
+          } else {
+            return { ...budget, selected: false };
+          }
+        });
+        setBudgets(checkSelectedBudget);
+      } else {
+        setBudgets(response.data.budgets);
+      }
     };
 
     setLoading(true);
@@ -115,7 +142,7 @@ const FilterVendorModal = () => {
     if (step === STEPS.CITY) {
       fetchCities();
     }
-  }, [step, countryCode, setCites, setCountries, setBudgets, setLoading]);
+  }, [step, countryCode, budgets, filters.budget, setCites, setCountries, setBudgets, setLoading]);
 
   let bodyContent = (
     <div className='h-full'>
@@ -159,13 +186,11 @@ const FilterVendorModal = () => {
           <h3 className='text-xl text-[#444444] font-bold'>Budget</h3>
         </div>
         <div>
-          <ul>
+          <div className='divide-y'>
             {budgets.map((budget, index) => (
-              <li key={index} onClick={() => handleSetBudget(budget.price)} className='border-b py-4 px-4'>
-                <span className='text-sm text-[#252525]'>{budget.price}</span>
-              </li>
+              <BudgetItem key={index} budget={budget.price} onSelected={() => handleSetBudget(budget.price, index, budget.id)} selected={budget.selected} />
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     );
@@ -208,7 +233,7 @@ const FilterVendorModal = () => {
           </div>
           <div className='flex flex-row items-center bg-white gap-2 drop-shadow-md rounded-md overflow-hidden px-3'>
             <BsSearch className='shrink-0' size={15} />
-            <input type='text' className='border-none outline-none w-full py-2 text-sm placeholder:text-sm' placeholder='Search' />
+            <input type='text' value={searchCity} onChange={(e) => setSearchCity(e.target.value)} className='border-none outline-none w-full py-2 text-sm placeholder:text-sm' placeholder='Search' />
           </div>
         </div>
         <div className='h-1/2'>
@@ -216,12 +241,11 @@ const FilterVendorModal = () => {
             <Loading />
           ) : (
             <div className='mt-[90px] divide-y'>
-              {/* <li className='flex justify-between items-center py-3 px-4'>
-                <span className='text-sm text-[#252525]'>Semua Kota</span>
-              </li> */}
-              {cities.map((city, index) => (
-                <CityItem key={index} cityName={city.cityName} selected={city.selected} onSelected={() => handleSelectCity(city.cityName, index)} />
-              ))}
+              {cities
+                .filter((city) => city.cityName.toLowerCase().includes(searchCity.toLowerCase()))
+                .map((city, index) => (
+                  <CityItem key={index} cityName={city.cityName} selected={city.selected} onSelected={() => handleSelectCity(city.cityName, index)} />
+                ))}
             </div>
           )}
         </div>

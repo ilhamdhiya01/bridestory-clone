@@ -1,15 +1,19 @@
 {
   "budgets": [
     {
+      "id": 1,
       "price": "All Budget"
     },
     {
+      "id": 2,
       "price": "$"
     },
     {
+      "id": 3,
       "price": "$$"
     },
     {
+      "id": 4,
       "price": "$$$"
     }
   ]

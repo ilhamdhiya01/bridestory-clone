@@ -12,7 +12,7 @@ import { CategoryProps } from '@/app';
 
 const VendorRecomendationModal = () => {
   const { isOpen, onClose } = useVendorRecomendationModal();
-  const { categories, setCategories, setVendorSelected, vendorSelected } = useHomeStore();
+  const { categories, setCategories, setVendorSelected } = useHomeStore();
   const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
 
   useEffect(() => {
@@ -24,10 +24,8 @@ const VendorRecomendationModal = () => {
     if (clicked) {
       if (storageVedorSelected.some((category) => category.id === id)) {
         setStorageVedorSelected(storageVedorSelected.filter((category) => category.id !== id));
-        console.log('hilang');
       } else {
         setStorageVedorSelected([...storageVedorSelected, clicked]);
-        console.log('tambah');
       }
     }
   };

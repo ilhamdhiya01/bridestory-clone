@@ -18,13 +18,20 @@ type City = {
   selected: boolean;
 };
 
+type Budget = {
+  id: number;
+  price: string;
+  selected: boolean;
+};
+
 type FilterVendorState = {
   isOpen: boolean;
   filters: Filter;
   countries: Country[];
   cities: City[];
   citySelected: boolean;
-  budgets: { price: string }[];
+  budgetSelected: boolean;
+  budgets: Budget[];
 };
 
 type FilterVendorAction = {
@@ -34,7 +41,8 @@ type FilterVendorAction = {
   setCountries: (data: Country[]) => void;
   setCites: (data: City[]) => void;
   setCitySelected: (data: boolean) => void;
-  setBudgets: (data: { price: string }[]) => void;
+  setBudgetSelected: (data: boolean) => void;
+  setBudgets: (data: Budget[]) => void;
 };
 
 type FilterVendorStore = FilterVendorState & FilterVendorAction;
@@ -49,6 +57,7 @@ const initialValue: FilterVendorState = {
   countries: [],
   cities: [],
   citySelected: false,
+  budgetSelected: false,
   budgets: [],
 };
 
@@ -60,5 +69,6 @@ export const useFilterVendorModal = create<FilterVendorStore>((set) => ({
   setCountries: (data) => set({ countries: data }),
   setCites: (data) => set({ cities: data }),
   setCitySelected: (data) => set({ citySelected: data }),
+  setBudgetSelected: (data) => set({ budgetSelected: data }),
   setBudgets: (data) => set({ budgets: data }),
 }));
