@@ -5,8 +5,9 @@ import Container from '../../Container';
 import VendorCategoryItem from './VendorCategoryItem';
 import SliderMobileVersion from '../../SliderMobileVersion';
 import { useFilterVendorModal } from '@/app/hooks/useFilterVendorModal';
+import { VendorCategoryProps } from '@/app';
 
-const VendorCategory = () => {
+const VendorCategory: React.FC<VendorCategoryProps> = ({ categoryName, vendors }) => {
   const { onOpen, filters } = useFilterVendorModal();
 
   return (
@@ -24,6 +25,7 @@ const VendorCategory = () => {
       </Container>
       <div className='mt-4'>
         <SliderMobileVersion>
+          {/* <VendorCategoryItem />
           <VendorCategoryItem />
           <VendorCategoryItem />
           <VendorCategoryItem />
@@ -34,8 +36,7 @@ const VendorCategory = () => {
           <VendorCategoryItem />
           <VendorCategoryItem />
           <VendorCategoryItem />
-          <VendorCategoryItem />
-          <VendorCategoryItem />
+          <VendorCategoryItem /> */}
         </SliderMobileVersion>
       </div>
     </>

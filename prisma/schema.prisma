@@ -49,31 +49,30 @@ model Option {
   optDesc   String
   optStatus String
 
-  users   User[]
-  vendors Vendor[]
+  users User[]
 }
 
 model Vendor {
-  id                Int      @id @default(autoincrement())
-  vendorName        String
-  countryCode       String
-  city              String
-  categoryId        Int
-  flexible          Boolean?
-  bridestoryPay     Boolean?
-  email             String?
-  phoone            String?
-  instagram         String?
-  facebook          String?
-  website           String?
-  twitter           String?
-  priceId           String
-  vendorImage       String
-  vendorDescription String
-  vendorLocation    String
-  vendorRating      Float?
+  id            Int      @id @default(autoincrement())
+  name          String
+  slug          String
+  countryCode   String
+  city          String
+  categoryId    Int
+  flexible      Boolean?
+  bridestoryPay Boolean?
+  email         String?
+  phone         String?
+  instagram     String?
+  facebook      String?
+  website       String?
+  twitter       String?
+  price         String
+  image         String
+  description   String
+  address      String
+  rating        Float?
 
-  price      Option                @relation(fields: [priceId], references: [optCode])
   categories CategoriesOnVendors[]
 }
 
@@ -82,6 +81,7 @@ model Category {
   categoryName String
   description  String?
   image        String?
+  
   vendors      CategoriesOnVendors[]
 }
 
@@ -90,8 +90,8 @@ model CategoriesOnVendors {
   vendorId   Int // relation scalar field (used in the `@relation` attribute above)
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int // relation scalar field (used in the `@relation` attribute above)
-  assignedAt DateTime @default(now())
-  assignedBy String
+  // assignedAt DateTime @default(now())
+  // assignedBy String
 
   @@id([vendorId, categoryId])
 }

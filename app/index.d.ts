@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { IconType } from 'react-icons';
 
 export type MenuItemProps = {
@@ -33,4 +34,21 @@ export type ButtonProps = {
   outline?: boolean;
   small?: boolean;
   icon?: IconType;
+};
+
+export type Vendor = {
+  name: string;
+  image: string;
+  slug: string;
+};
+
+export type VendorCategoryItemProps = {
+  name: strin;
+  slug: string;
+  image: string;
+};
+
+export type VendorCategoryProps = {
+  categoryName?: string;
+  vendors?: Vendor[];
 };
