@@ -1,5 +1,6 @@
 import { type } from 'os';
 import { IconType } from 'react-icons';
+import type { Vendor } from '@prisma/client';
 
 export type MenuItemProps = {
   label: string;
@@ -36,10 +37,8 @@ export type ButtonProps = {
   icon?: IconType;
 };
 
-export type Vendor = {
-  name: string;
-  image: string;
-  slug: string;
+export type Vendors = {
+  vendor: Vendor;
 };
 
 export type VendorCategoryItemProps = {
@@ -49,6 +48,7 @@ export type VendorCategoryItemProps = {
 };
 
 export type VendorCategoryProps = {
-  categoryName?: string;
-  vendors?: Vendor[];
+  id: number;
+  categoryName: string;
+  vendors: Vendors[];
 };

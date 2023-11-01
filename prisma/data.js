@@ -958,7 +958,171 @@ const categories = [
   },
 ]
 
+const categoriesOnVendors = [
+  {
+    vendorId: 1,
+    categoryId: 1
+  },
+  {
+    vendorId: 2,
+    categoryId: 1
+  },
+  {
+    vendorId: 3,
+    categoryId: 1
+  },
+  {
+    vendorId: 4,
+    categoryId: 1
+  },
+  {
+    vendorId: 5,
+    categoryId: 1
+  },
+  {
+    vendorId: 6,
+    categoryId: 1
+  },
+  {
+    vendorId: 7,
+    categoryId: 1
+  },
+  {
+    vendorId: 8,
+    categoryId: 1
+  },
+  {
+    vendorId: 9,
+    categoryId: 2
+  },
+  {
+    vendorId: 10,
+    categoryId: 2
+  },
+  {
+    vendorId: 11,
+    categoryId: 2
+  },
+  {
+    vendorId: 12,
+    categoryId: 2
+  },
+  {
+    vendorId: 13,
+    categoryId: 2
+  },
+  {
+    vendorId: 14,
+    categoryId: 2
+  },
+  {
+    vendorId: 15,
+    categoryId: 2
+  },
+  {
+    vendorId: 16,
+    categoryId: 2
+  },
+  {
+    vendorId: 17,
+    categoryId: 3
+  },
+  {
+    vendorId: 18,
+    categoryId: 3
+  },
+  {
+    vendorId: 19,
+    categoryId: 3
+  },
+  {
+    vendorId: 20,
+    categoryId: 3
+  },
+  {
+    vendorId: 21,
+    categoryId: 3
+  },
+  {
+    vendorId: 22,
+    categoryId: 3
+  },
+  {
+    vendorId: 23,
+    categoryId: 3
+  },
+  {
+    vendorId: 24,
+    categoryId: 3
+  },
+  {
+    vendorId: 25,
+    categoryId: 4
+  },
+  {
+    vendorId: 26,
+    categoryId: 4
+  },
+  {
+    vendorId: 27,
+    categoryId: 4
+  },
+  {
+    vendorId: 28,
+    categoryId: 4
+  },
+  {
+    vendorId: 29,
+    categoryId: 4
+  },
+  {
+    vendorId: 30,
+    categoryId: 4
+  },
+  {
+    vendorId: 31,
+    categoryId: 4
+  },
+  {
+    vendorId: 32,
+    categoryId: 4
+  },
+  {
+    vendorId: 33,
+    categoryId: 5
+  },
+  {
+    vendorId: 34,
+    categoryId: 5
+  },
+  {
+    vendorId: 35,
+    categoryId: 5
+  },
+  {
+    vendorId: 36,
+    categoryId: 5
+  },
+  {
+    vendorId: 37,
+    categoryId: 5
+  },
+  {
+    vendorId: 38,
+    categoryId: 5
+  },
+  {
+    vendorId: 39,
+    categoryId: 5
+  },
+  {
+    vendorId: 40,
+    categoryId: 5
+  },
+];
+
 module.exports = {
   vendors,
-  categories
+  categories,
+  categoriesOnVendors
 };

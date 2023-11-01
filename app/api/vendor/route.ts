@@ -7,7 +7,11 @@ export const GET = async () => {
   const vendor = await prisma.category.findMany({
     take: 5,
     include: {
-      vendors: true,
+      vendors: {
+        include: {
+          vendor: true,
+        },
+      },
     },
   });
   return NextResponse.json(vendor);
