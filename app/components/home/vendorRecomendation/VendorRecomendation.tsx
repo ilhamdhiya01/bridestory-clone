@@ -1,25 +1,45 @@
 'use client';
 
+import axios from 'axios';
 import Container from '../../Container';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
-import VendorRecomendationList from './VendorRecomendationList';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { CategoryProps } from '@/app';
+import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
+import VendorRecomendationList from './VendorRecomendationList';
+import CategoryItem from './CategoryItem';
+import SliderMobileVersion from '../../SliderMobileVersion';
 
 const VendorRecomendation = () => {
+  const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
   const { onOpen } = useVendorRecomendationModal();
-  const { setCategories, vendorSelected, categories } = useHomeStore();
+  const { setCategories, vendorSelected, categories, setVendorSelected } = useHomeStore();
 
   useEffect(() => {
+    if (storageVedorSelected.length === 0) {
+      const initialCategories = [
+        { categoryName: 'Venue', id: 1, selected: true },
+        { categoryName: 'Wedding Planner', id: 2, selected: true },
+        { categoryName: 'Fotografi', id: 3, selected: true },
+      ];
+      setStorageVedorSelected(initialCategories);
+      setVendorSelected(initialCategories);
+    }
     const fetchAllCategory = async () => {
-      const response = await axios.get('/api/category');
-      setCategories(response.data);
+      try {
+        const response = await axios.get('/api/category');
+        const categories: CategoryProps[] = response.data;
+        if (response.status === 200) {
+          setCategories(categories);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
     fetchAllCategory();
-  }, [setCategories]);
+  }, [setCategories, setStorageVedorSelected, setVendorSelected, storageVedorSelected.length]);
 
   // check vendor selected from localStorage and set selected vendor to true
   const checkVendorSelected = () => {
@@ -45,7 +65,12 @@ const VendorRecomendation = () => {
       </Container>
       <div className='overflow-x-hidden'>
         <div className='w-full overflow-x-auto no-scrollbar'>
-          <VendorRecomendationList />
+          {/* <VendorRecomendationList vendors={storageVedorSelected} /> */}
+          <SliderMobileVersion>
+            {vendorSelected?.map((category) => (
+              <CategoryItem key={category.id} categoryName={category.categoryName} />
+            ))}
+          </SliderMobileVersion>
         </div>
       </div>
     </>

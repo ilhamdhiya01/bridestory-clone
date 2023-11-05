@@ -8,11 +8,13 @@ import Modal from './Modal';
 import Container from '../Container';
 import Button from '../Button';
 import VendorRecomendationItem from '../home/vendorRecomendation/VendorRecomendationItem';
-import { CategoryProps } from '@/app';
+import { CategoryProps, VendorCategoryProps } from '@/app';
+import { useGlobalStore } from '@/app/store/GlobalStore';
 
 const VendorRecomendationModal = () => {
   const { isOpen, onClose } = useVendorRecomendationModal();
-  const { categories, setCategories, setVendorSelected } = useHomeStore();
+  const { categories, vendorSelected, setCategories, setVendorSelected, setVendorCategories } = useHomeStore();
+  const { setLoading } = useGlobalStore();
   const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
 
   useEffect(() => {
@@ -39,6 +41,12 @@ const VendorRecomendationModal = () => {
     handleVendorSelected(updatedCategories[index].id);
   };
 
+  const handleFilterSelectedCategory = () => {
+    onClose();
+    setLoading(true);
+    setVendorCategories(storageVedorSelected?.map((vendor) => vendor.id) || [], setLoading);
+  };
+
   const body = (
     <div className='py-3'>
       <Container>
@@ -52,7 +60,7 @@ const VendorRecomendationModal = () => {
           ))}
         </div>
         <div className='mt-3'>
-          <Button label='Selesai' onClick={onClose} />
+          <Button label='Selesai' onClick={handleFilterSelectedCategory} />
         </div>
       </Container>
     </div>

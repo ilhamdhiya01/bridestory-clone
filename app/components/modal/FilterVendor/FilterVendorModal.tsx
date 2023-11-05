@@ -66,7 +66,7 @@ const FilterVendorModal = () => {
     }
   };
 
-  const handleSetBudget = (budget: string, index: number, budgetId: number) => {
+  const handleSetBudget = (budget: string, index: number) => {
     const selectedBudget = [...budgets];
     selectedBudget[index].selected = !selectedBudget[index].selected;
     setFilter({ ...filters, budget: budget });
@@ -85,53 +85,65 @@ const FilterVendorModal = () => {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const response = await axios.get(`https://restcountries.com/v3.1/all`);
-      if (response.status === 200) {
-        setLoading(false);
+      setLoading(true);
+      try {
+        const response = await axios.get(`https://restcountries.com/v3.1/all`);
+        if (response.status === 200) {
+          setLoading(false);
+        }
+        const transformedCountries = response.data.map((country: any) => ({
+          countryName: country.name.common,
+          countryCode: country.cca2,
+          flag: country.flags.svg,
+        }));
+        // sort country by asc
+        transformedCountries.sort((a: any, b: any) => a.countryName.localeCompare(b.countryName));
+        setCountries(transformedCountries);
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-      const transformedCountries = response.data.map((country: any) => ({
-        countryName: country.name.common,
-        countryCode: country.cca2,
-        flag: country.flags.svg,
-      }));
-      // sort country by asc
-      transformedCountries.sort((a: any, b: any) => a.countryName.localeCompare(b.countryName));
-      setCountries(transformedCountries);
     };
 
     const fetchCities = async () => {
-      const response = await axios.get(`http://api.geonames.org/searchJSON?country=${countryCode}&username=ilhamdhiya01`);
-      if (response.status === 200) {
-        setLoading(false);
-      }
-      const transformedCities = response.data.geonames.map((city: any) => ({
-        cityName: city.name,
-        adminName1: city.adminName1,
-      }));
-      // sort city by asc
-      transformedCities.sort((a: any, b: any) => a.cityName.localeCompare(b.cityName));
+      setLoading(true);
+      try {
+        const response = await axios.get(`http://api.geonames.org/searchJSON?country=${countryCode}&username=ilhamdhiya01`);
+        if (response.status === 200) {
+          setLoading(false);
+        }
+        const transformedCities = response.data.geonames.map((city: any) => ({
+          cityName: city.name,
+          adminName1: city.adminName1,
+        }));
+        // sort city by asc
+        transformedCities.sort((a: any, b: any) => a.cityName.localeCompare(b.cityName));
 
-      setCites(transformedCities);
+        setCites(transformedCities);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
     const fetchBudget = async () => {
-      const response = await axios.get('/static/data.json');
-      // check if budget already selected set selected budget to be true
-      if (budgets.length !== 0) {
-        const checkSelectedBudget = budgets.map((budget) => {
-          if (budget.price === filters.budget) {
-            return { ...budget, selected: true };
-          } else {
-            return { ...budget, selected: false };
-          }
-        });
-        setBudgets(checkSelectedBudget);
-      } else {
-        setBudgets(response.data.budgets);
+      try {
+        const response = await axios.get('/static/data.json');
+        // check if budget already selected set selected budget to be true
+        if (budgets.length !== 0) {
+          const checkSelectedBudget = budgets.map((budget) => {
+            if (budget.price === filters.budget) {
+              return { ...budget, selected: true };
+            } else {
+              return { ...budget, selected: false };
+            }
+          });
+          setBudgets(checkSelectedBudget);
+        } else {
+          setBudgets(response.data.budgets);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     };
-
-    setLoading(true);
 
     if (step === STEPS.BUDGET) {
       fetchBudget();
@@ -188,7 +200,7 @@ const FilterVendorModal = () => {
         <div>
           <div className='divide-y'>
             {budgets.map((budget, index) => (
-              <BudgetItem key={index} budget={budget.price} onSelected={() => handleSetBudget(budget.price, index, budget.id)} selected={budget.selected} />
+              <BudgetItem key={index} budget={budget.price} onSelected={() => handleSetBudget(budget.price, index)} selected={budget.selected} />
             ))}
           </div>
         </div>

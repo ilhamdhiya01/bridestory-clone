@@ -5,6 +5,7 @@ import Navbar from './components/navbar/Navbar';
 import Menu from './components/navbar/Menu';
 import VendorRecomendationModal from './components/modal/VendorRecomendationModal';
 import FilterVendorModal from './components/modal/FilterVendor/FilterVendorModal';
+import FixedChat from './components/FixedChat';
 
 const figtree = Figtree({ subsets: ['latin'] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <VendorRecomendationModal />
           <FilterVendorModal />
           <Navbar />
+          <FixedChat />
           <Menu />
         </>
         {children}
