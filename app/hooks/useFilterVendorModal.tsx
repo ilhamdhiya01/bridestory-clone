@@ -27,7 +27,7 @@ type Budget = {
 
 type FilterVendorState = {
   isOpen: boolean;
-  filters: Filter;
+  filters: Record<string, Filter>;
   countries: Country[];
   cities: City[];
   citySelected: boolean;
@@ -38,7 +38,7 @@ type FilterVendorState = {
 type FilterVendorAction = {
   onClose: () => void;
   onOpen: () => void;
-  setFilter: (data: Filter) => void;
+  setFilter: (data: string) => void;
   setCountries: (data: Country[]) => void;
   setCites: (data: City[]) => void;
   setCitySelected: (data: boolean) => void;
@@ -48,14 +48,16 @@ type FilterVendorAction = {
 
 type FilterVendorStore = FilterVendorState & FilterVendorAction;
 
+const DEFAULT_FILTER: Filter = {
+  budget: '',
+  categorySlug: '',
+  city: '',
+  country: '',
+};
+
 const initialValue: FilterVendorState = {
   isOpen: false,
-  filters: {
-    categorySlug: '',
-    budget: 'All Budget',
-    country: 'Indonesia',
-    city: 'Indonesia',
-  },
+  filters: {},
   countries: [],
   cities: [],
   citySelected: false,
@@ -63,11 +65,18 @@ const initialValue: FilterVendorState = {
   budgets: [],
 };
 
-export const useFilterVendorModal = create<FilterVendorStore>((set) => ({
+export const useFilterVendorModal = create<FilterVendorStore>((set, get) => ({
   ...initialValue,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
-  setFilter: (data) => set({ filters: data }),
+  setFilter: (category) => {
+    const { filters } = get();
+    if (!Object.hasOwn(filters, category)) {
+      set((state) => ({ filters: { ...state.filters, [category]: DEFAULT_FILTER } }));
+      return DEFAULT_FILTER;
+    }
+    return filters[category];
+  },
   setCountries: (data) => set({ countries: data }),
   setCites: (data) => set({ cities: data }),
   setCitySelected: (data) => set({ citySelected: data }),

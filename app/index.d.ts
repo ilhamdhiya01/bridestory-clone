@@ -52,7 +52,6 @@ export type VendorCategoryProps = {
   slug: string;
   categoryName: string;
   vendors: Vendors[];
-  filters?: Filter;
 };
 
 export type Filter = {

@@ -16,13 +16,13 @@ const Home = () => {
   const { setVendorCategories, vendorSelected, vendorCategories } = useHomeStore();
   const { setLoading, isLoading } = useGlobalStore();
   const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
-  const [test, setTest] = useState<Filter>({ categoryName: '', categorySlug: '', budget: '', country: '', city: '' });
   const { filters } = useFilterVendorModal();
   useEffect(() => {
     // setTest({ ...test, initialFilter });
     setLoading(true);
     setVendorCategories(storageVedorSelected?.map((vendor) => vendor.id) || [], setLoading);
   }, [setVendorCategories, vendorSelected, setLoading, storageVedorSelected]);
+  console.log(vendorCategories);
 
   // let initialFilter = {
   //   categorySlug: '',
