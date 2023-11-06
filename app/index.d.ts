@@ -49,6 +49,44 @@ export type VendorCategoryItemProps = {
 
 export type VendorCategoryProps = {
   id: number;
+  slug: string;
   categoryName: string;
   vendors: Vendors[];
+  filters?: Filter;
+};
+
+export type Filter = {
+  categoryName: string;
+  categorySlug: string;
+  budget: string;
+  country: string;
+  city: string;
+};
+
+export type Country = {
+  countryName: string;
+  countryCode: string;
+  flag: string;
+};
+
+export type City = {
+  cityName: string;
+  adminName1: string;
+  selected: boolean;
+};
+
+export type Budget = {
+  id: number;
+  price: string;
+  selected: boolean;
+};
+
+export type FilterVendorState = {
+  isOpen: boolean;
+  initialFilter: Record<string, Filter>;
+  countries: Country[];
+  cities: City[];
+  citySelected: boolean;
+  budgetSelected: boolean;
+  budgets: Budget[];
 };

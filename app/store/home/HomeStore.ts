@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { HomeState, HomeStore } from '..';
 import axios from 'axios';
 import { VendorCategoryProps } from '@/app';
-import { useGlobalStore } from '../GlobalStore';
 
 // const { setLoading } = useGlobalStore();
 

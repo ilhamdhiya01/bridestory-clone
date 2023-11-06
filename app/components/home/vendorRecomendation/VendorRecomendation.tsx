@@ -13,11 +13,12 @@ import CategoryItem from './CategoryItem';
 import SliderMobileVersion from '../../SliderMobileVersion';
 
 const VendorRecomendation = () => {
-  const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
   const { onOpen } = useVendorRecomendationModal();
   const { setCategories, vendorSelected, categories, setVendorSelected } = useHomeStore();
+  const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
 
   useEffect(() => {
+    // check localstorage have a package selected, set initial vendor if localstorage is null
     if (storageVedorSelected.length === 0) {
       const initialCategories = [
         { categoryName: 'Venue', id: 1, selected: true },

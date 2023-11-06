@@ -813,146 +813,175 @@ const vendors = [
 const categories = [
   {
     categoryName: 'Venue',
+    slug: createSlug('Venue'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Wedding Planner',
+    slug: createSlug('Wedding Planner'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Fotografi',
+    slug: createSlug('Fotografi'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Videografi',
+    slug: createSlug('Videografi'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Hair & Makeup',
+    slug: createSlug('Hair & Makeup'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Gaun & Busana Pengantin',
+    slug: createSlug('Gaun & Busana Pengantin'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Bridal',
+    slug: createSlug('Bridal'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Katering',
+    slug: createSlug('Katering'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Dekorasi & Pencahayaan',
+    slug: createSlug('Dekorasi & Pencahayaan'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Suvenir & Hadiah',
+    slug: createSlug('Suvenir & Hadiah'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Undangan',
+    slug: createSlug('Undangan'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Layanan Unik',
+    slug: createSlug('Layanan Unik'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Bunga',
+    slug: createSlug('Bunga'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Entertainment (Musik)',
+    slug: createSlug('Entertainment (Musik)'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Photo booth',
+    slug: createSlug('Photo booth'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Rental',
+    slug: createSlug('Rental'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Entertainment (MC)',
+    slug: createSlug('Entertainment (MC)'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Bulan madu',
+    slug: createSlug('Bulan madu'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Aksesori Pernikahan',
+    slug: createSlug('Aksesori Pernikahan'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Perhiasan',
+    slug: createSlug('Perhiasan'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Kue Pengantin',
+    slug: createSlug('Kue Pengantin'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Sepatu Pengantin',
+    slug: createSlug('Sepatu Pengantin'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Boutonnieres & Corsages',
+    slug: createSlug('Boutonnieres & Corsages'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Busana Pria',
+    slug: createSlug('Busana Pria'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Sweet Corner',
+    slug: createSlug('Sweet Corner'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Kesehatan & Kecantikan',
+    slug: createSlug('Kesehatan & Kecantikan'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Entertainment (DJ)',
+    slug: createSlug('Entertainment (DJ)'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Tari & Koreografi',
+    slug: createSlug('Tari & Koreografi'),
     description: '',
     image: ''
   },
   {
     categoryName: 'Officiant',
+    slug: createSlug('Officiant'),
     description: '',
     image: ''
   },

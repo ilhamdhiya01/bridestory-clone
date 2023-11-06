@@ -78,6 +78,7 @@ model Vendor {
 
 model Category {
   id           Int                   @id @default(autoincrement())
+  slug        String
   categoryName String
   description  String?
   image        String?

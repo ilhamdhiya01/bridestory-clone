@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 type Filter = {
+  categorySlug: string;
   budget: string;
   country: string;
   city: string;
@@ -50,6 +51,7 @@ type FilterVendorStore = FilterVendorState & FilterVendorAction;
 const initialValue: FilterVendorState = {
   isOpen: false,
   filters: {
+    categorySlug: '',
     budget: 'All Budget',
     country: 'Indonesia',
     city: 'Indonesia',

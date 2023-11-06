@@ -160,7 +160,7 @@ const FilterVendorModal = () => {
     <div className='h-full'>
       <div className='flex justify-center items-center border-b py-4 relative'>
         <AiOutlineClose onClick={onClose} size={20} className='absolute left-2 text-[#848484]' />
-        <h3 className='font-semibold'>Venue</h3>
+        <h3 className='font-semibold'>{filters.categorySlug}</h3>
       </div>
       <div>
         <Container>
