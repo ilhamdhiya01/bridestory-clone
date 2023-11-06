@@ -73,9 +73,9 @@ export const useFilterVendorModal = create<FilterVendorStore>((set, get) => ({
     const { filters } = get();
     if (!Object.hasOwn(filters, category)) {
       set((state) => ({ filters: { ...state.filters, [category]: DEFAULT_FILTER } }));
-      return DEFAULT_FILTER;
+      // return DEFAULT_FILTER;
     }
-    return filters[category];
+    // return filters[category];
   },
   setCountries: (data) => set({ countries: data }),
   setCites: (data) => set({ cities: data }),

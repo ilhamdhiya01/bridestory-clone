@@ -22,7 +22,6 @@ const Home = () => {
     setLoading(true);
     setVendorCategories(storageVedorSelected?.map((vendor) => vendor.id) || [], setLoading);
   }, [setVendorCategories, vendorSelected, setLoading, storageVedorSelected]);
-  console.log(vendorCategories);
 
   // let initialFilter = {
   //   categorySlug: '',

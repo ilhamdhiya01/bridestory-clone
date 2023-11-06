@@ -6,7 +6,7 @@ import VendorCategoryItem from './VendorCategoryItem';
 import SliderMobileVersion from '../../SliderMobileVersion';
 import { useFilterVendorModal } from '@/app/hooks/useFilterVendorModal';
 import { VendorCategoryProps } from '@/app';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { Filter } from '@/app';
 
 const VendorCategory: React.FC<VendorCategoryProps> = ({ categoryName, vendors, id, slug }) => {
@@ -20,16 +20,17 @@ const VendorCategory: React.FC<VendorCategoryProps> = ({ categoryName, vendors, 
 
   const showModalFilter = useCallback(() => {
     onOpen();
-    setFilter('venue');
-  }, [slug]);
+    setFilter(slug);
+  }, [setFilter, slug, onOpen]);
+
+  // console.log(filters);
+
   return (
     <div>
       <Container>
         <div className='flex justify-between'>
           <div className='flex flex-col'>
-            <h2 className='text-lg font-bold text-[#252525]'>
-              {categoryName} di Indonesia {slug}
-            </h2>
+            <h2 className='text-lg font-bold text-[#252525]'>{categoryName} di Indonesia</h2>
             <p className='text-xs text-[#555555]'>
               Lihat Rekomendasi dengan <b>$$</b> budget
             </p>
