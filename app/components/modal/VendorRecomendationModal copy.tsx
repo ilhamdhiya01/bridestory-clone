@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
 import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
@@ -12,17 +12,14 @@ import { CategoryProps, VendorCategoryProps } from '@/app';
 import { useGlobalStore } from '@/app/store/GlobalStore';
 
 const VendorRecomendationModal = () => {
-  const { isOpen, selected, onClose, getVendorRecomendationBySlugCategory } = useVendorRecomendationModal();
+  const { isOpen, onClose } = useVendorRecomendationModal();
   const { categories, vendorSelected, setCategories, setVendorSelected, setVendorCategories } = useHomeStore();
   const { setLoading } = useGlobalStore();
   const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
 
-  // const select = useMemo(() => getVendorRecomendationBySlugCategory(), [getVendorRecomendationBySlugCategory, selected]);
-
   useEffect(() => {
-    localStorage.setItem('selected', JSON.stringify(selected));
     setVendorSelected(storageVedorSelected);
-  }, [storageVedorSelected, setVendorSelected, selected]);
+  }, [storageVedorSelected, setVendorSelected]);
 
   const handleVendorSelected = (id: number) => {
     const clicked = categories.find((item) => item.id === id);
@@ -36,23 +33,13 @@ const VendorRecomendationModal = () => {
   };
 
   // handle select category and change bg when category selected
-  // const handleSelected = (index: number) => {
-  //   const updatedCategories = [...categories];
-  //   updatedCategories[index].selected = !updatedCategories[index].selected;
-  //   setCategories(updatedCategories);
-  //   // get data category selected and store to localStorage
-  //   handleVendorSelected(updatedCategories[index].id);
-  // };
-
-  const handleSelected = useCallback(
-    (slugCategory: string, index: number) => {
-      getVendorRecomendationBySlugCategory(slugCategory);
-      const updatedCategories = [...categories];
-      updatedCategories[index].selected = !updatedCategories[index].selected;
-      setCategories(updatedCategories);
-    },
-    [categories, getVendorRecomendationBySlugCategory, setCategories]
-  );
+  const handleSelected = (index: number) => {
+    const updatedCategories = [...categories];
+    updatedCategories[index].selected = !updatedCategories[index].selected;
+    setCategories(updatedCategories);
+    // get data category selected and store to localStorage
+    handleVendorSelected(updatedCategories[index].id);
+  };
 
   const handleFilterSelectedCategory = () => {
     onClose();
@@ -69,7 +56,7 @@ const VendorRecomendationModal = () => {
         </div>
         <div className='flex flex-row flex-wrap gap-2 mt-4'>
           {categories.map((category, index) => (
-            <VendorRecomendationItem key={category.id} selected={category.selected} onSelected={() => handleSelected(category.slug, index)} categoryName={category.categoryName} id={category.id} />
+            <VendorRecomendationItem key={category.id} selected={category.selected} onSelected={() => handleSelected(index)} categoryName={category.categoryName} id={category.id} />
           ))}
         </div>
         <div className='mt-3'>

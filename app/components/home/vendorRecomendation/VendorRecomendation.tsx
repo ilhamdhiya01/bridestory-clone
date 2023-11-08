@@ -31,15 +31,15 @@ const VendorRecomendation = () => {
 
   useEffect(() => {
     // check localstorage have a package selected, set initial vendor if localstorage is null
-    if (storageVedorSelected.length === 0) {
-      const initialCategories = [
-        { categoryName: 'Venue', id: 1, selected: true },
-        { categoryName: 'Wedding Planner', id: 2, selected: true },
-        { categoryName: 'Fotografi', id: 3, selected: true },
-      ];
-      setStorageVedorSelected(initialCategories);
-      setVendorSelected(initialCategories);
-    }
+    // if (storageVedorSelected.length === 0) {
+    //   const initialCategories = [
+    //     { categoryName: 'Venue', id: 1, selected: true },
+    //     { categoryName: 'Wedding Planner', id: 2, selected: true },
+    //     { categoryName: 'Fotografi', id: 3, selected: true },
+    //   ];
+    //   setStorageVedorSelected(initialCategories);
+    //   setVendorSelected(initialCategories);
+    // }
 
     fetchAllCategory();
   }, [fetchAllCategory, setCategories, setStorageVedorSelected, setVendorSelected, storageVedorSelected.length]);
