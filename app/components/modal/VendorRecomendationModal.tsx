@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
 import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
@@ -12,25 +12,32 @@ import { CategoryProps, VendorCategoryProps } from '@/app';
 import { useGlobalStore } from '@/app/store/GlobalStore';
 
 const VendorRecomendationModal = () => {
-  const { isOpen, selected, onClose, getVendorRecomendationBySlugCategory } = useVendorRecomendationModal();
+  const { isOpen, selected, onClose, getVendorRecomendationBySlugCategory, setSelected } = useVendorRecomendationModal();
   const { categories, vendorSelected, setCategories, setVendorSelected, setVendorCategories } = useHomeStore();
   const { setLoading } = useGlobalStore();
   const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
 
-  // const select = useMemo(() => getVendorRecomendationBySlugCategory(), [getVendorRecomendationBySlugCategory, selected]);
-
+  // const select = useMemo(() => test(), [getVendorRecomendationBySlugCategory]);
   useEffect(() => {
     localStorage.setItem('selected', JSON.stringify(selected));
-    setVendorSelected(storageVedorSelected);
+    console.log(selected);
   }, [storageVedorSelected, setVendorSelected, selected]);
 
-  const handleVendorSelected = (id: number) => {
-    const clicked = categories.find((item) => item.id === id);
+  // const test = (slug: string) => {
+  //   getVendorRecomendationBySlugCategory(slug);
+  // };
+
+  const handleVendorSelected = (slugCategory: string) => {
+    const clicked = categories.find((item) => item.slug === slugCategory);
+    console.log(clicked);
     if (clicked) {
-      if (storageVedorSelected.some((category) => category.id === id)) {
-        setStorageVedorSelected(storageVedorSelected.filter((category) => category.id !== id));
+      if (selected.hasOwnProperty(slugCategory)) {
+        console.log('hilangkan');
+        // setStorageVedorSelected(storageVedorSelected.filter((category) => category.id !== id));
+        // setSelected(slugCategory, {...selected, })
       } else {
-        setStorageVedorSelected([...storageVedorSelected, clicked]);
+        console.log('tambahkan');
+        // setStorageVedorSelected([...storageVedorSelected, clicked]);
       }
     }
   };
@@ -41,17 +48,21 @@ const VendorRecomendationModal = () => {
   //   updatedCategories[index].selected = !updatedCategories[index].selected;
   //   setCategories(updatedCategories);
   //   // get data category selected and store to localStorage
-  //   handleVendorSelected(updatedCategories[index].id);
+  //   handleVendorSelected(updatedCategories[index].slug);
   // };
 
   const handleSelected = useCallback(
     (slugCategory: string, index: number) => {
       getVendorRecomendationBySlugCategory(slugCategory);
-      const updatedCategories = [...categories];
-      updatedCategories[index].selected = !updatedCategories[index].selected;
-      setCategories(updatedCategories);
+      // setSelected(slugCategory, { ...select, onSelected: !set });
+      // setKey(slugCategory);
+      // getVendorRecomendationBySlugCategory(category.slug).slugCategory
+      // const updatedCategories = [...categories];
+      // updatedCategories[index].selected = !updatedCategories[index].selected;
+      // setCategories(updatedCategories);
+      // handleVendorSelected(slugCategory);
     },
-    [categories, getVendorRecomendationBySlugCategory, setCategories]
+    [getVendorRecomendationBySlugCategory]
   );
 
   const handleFilterSelectedCategory = () => {

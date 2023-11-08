@@ -3,7 +3,7 @@ import { create } from 'zustand';
 type Category = {
   slugCategory: string;
   categoryName: string;
-  selected: boolean;
+  onSelected: boolean;
 };
 
 type VendorRecomendationState = {
@@ -14,13 +14,14 @@ type VendorRecomendationState = {
 const DEFAULT_SELECTED: Category = {
   slugCategory: '',
   categoryName: '',
-  selected: false,
+  onSelected: false,
 };
 
 type VendorRecomendationAction = {
   onClose: () => void;
   onOpen: () => void;
   getVendorRecomendationBySlugCategory: (slugCategory: string) => Category;
+  setSelected: (slugCategory: string, data: Category) => void;
 };
 
 const initialValue: VendorRecomendationState = {
@@ -36,10 +37,21 @@ export const useVendorRecomendationModal = create<VendorRecomendationStore>((set
   onClose: () => set({ isOpen: false }),
   getVendorRecomendationBySlugCategory: (slugCategory) => {
     const { selected } = get();
-    if (!Object.hasOwn(selected, slugCategory)) {
-      set((state) => ({ selected: { ...state.selected, [slugCategory]: DEFAULT_SELECTED } }));
+
+    if (selected.hasOwnProperty(slugCategory)) {
+      set((state) => {
+        const updatedSelected = { ...state.selected };
+        delete updatedSelected[slugCategory];
+        return { selected: updatedSelected };
+      });
+    }
+
+    if (!selected.hasOwnProperty(slugCategory)) {
+      set((state) => ({ selected: { ...state.selected, [slugCategory]: { ...DEFAULT_SELECTED, onSelected: !DEFAULT_SELECTED.onSelected, slugCategory: slugCategory } } }));
       return DEFAULT_SELECTED;
     }
+
     return selected[slugCategory];
   },
+  setSelected: (slugCategory, data) => set((state) => ({ selected: { ...state.selected, [slugCategory]: data } })),
 }));
