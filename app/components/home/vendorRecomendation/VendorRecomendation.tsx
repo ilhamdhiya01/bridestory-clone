@@ -5,7 +5,7 @@ import Container from '../../Container';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { CategoryProps } from '@/app';
 import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
 import VendorRecomendationList from './VendorRecomendationList';
@@ -16,6 +16,18 @@ const VendorRecomendation = () => {
   const { onOpen } = useVendorRecomendationModal();
   const { setCategories, vendorSelected, categories, setVendorSelected } = useHomeStore();
   const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
+
+  const fetchAllCategory = useCallback(async () => {
+    try {
+      const response = await axios.get('/api/category');
+      const categories: CategoryProps[] = response.data;
+      if (response.status === 200) {
+        setCategories(categories);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }, [setCategories]);
 
   useEffect(() => {
     // check localstorage have a package selected, set initial vendor if localstorage is null
@@ -28,19 +40,9 @@ const VendorRecomendation = () => {
       setStorageVedorSelected(initialCategories);
       setVendorSelected(initialCategories);
     }
-    const fetchAllCategory = async () => {
-      try {
-        const response = await axios.get('/api/category');
-        const categories: CategoryProps[] = response.data;
-        if (response.status === 200) {
-          setCategories(categories);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+
     fetchAllCategory();
-  }, [setCategories, setStorageVedorSelected, setVendorSelected, storageVedorSelected.length]);
+  }, [fetchAllCategory, setCategories, setStorageVedorSelected, setVendorSelected, storageVedorSelected.length]);
 
   // check vendor selected from localStorage and set selected vendor to true
   const checkVendorSelected = () => {

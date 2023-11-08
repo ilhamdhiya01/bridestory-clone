@@ -3,8 +3,6 @@ import { HomeState, HomeStore } from '..';
 import axios from 'axios';
 import { VendorCategoryProps } from '@/app';
 
-// const { setLoading } = useGlobalStore();
-
 const initialValue: HomeState = {
   categories: [],
   vendorCategories: [],

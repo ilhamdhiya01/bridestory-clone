@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
 type Filter = {
-  categorySlug: string;
-  budget: string;
-  country: string;
-  city: string;
+  slugCategory?: string;
+  budget?: string;
+  country?: string;
+  city?: string;
 };
 
 type Country = {
@@ -25,34 +25,37 @@ type Budget = {
   selected: boolean;
 };
 
+type FilterModalData = {
+  categoryName: string;
+  slugCategory: string;
+};
+
 type FilterVendorState = {
   isOpen: boolean;
   filters: Record<string, Filter>;
   countries: Country[];
   cities: City[];
-  citySelected: boolean;
-  budgetSelected: boolean;
   budgets: Budget[];
+  filterModalData: FilterModalData;
 };
 
 type FilterVendorAction = {
   onClose: () => void;
-  onOpen: () => void;
-  setFilter: (data: string) => void;
+  onOpen: (slugCategory: string, categoryName: string) => void;
+  getFilterBySlugCategory: (data: string) => Filter;
+  setFilters: (category: string, data: Filter) => void;
   setCountries: (data: Country[]) => void;
   setCites: (data: City[]) => void;
-  setCitySelected: (data: boolean) => void;
-  setBudgetSelected: (data: boolean) => void;
   setBudgets: (data: Budget[]) => void;
 };
 
 type FilterVendorStore = FilterVendorState & FilterVendorAction;
 
-const DEFAULT_FILTER: Filter = {
-  budget: '',
-  categorySlug: '',
-  city: '',
-  country: '',
+export const DEFAULT_FILTER: Filter = {
+  budget: 'All Budget',
+  slugCategory: '',
+  city: 'Indonesia',
+  country: 'Indonesia',
 };
 
 const initialValue: FilterVendorState = {
@@ -60,26 +63,27 @@ const initialValue: FilterVendorState = {
   filters: {},
   countries: [],
   cities: [],
-  citySelected: false,
-  budgetSelected: false,
   budgets: [],
+  filterModalData: { slugCategory: '', categoryName: '' },
 };
 
 export const useFilterVendorModal = create<FilterVendorStore>((set, get) => ({
   ...initialValue,
-  onOpen: () => set({ isOpen: true }),
+  onOpen: (slugCategory, categoryName) => set({ isOpen: true, filterModalData: { slugCategory: slugCategory, categoryName: categoryName } }),
   onClose: () => set({ isOpen: false }),
-  setFilter: (category) => {
+  getFilterBySlugCategory: (slugCategory) => {
     const { filters } = get();
-    if (!Object.hasOwn(filters, category)) {
-      set((state) => ({ filters: { ...state.filters, [category]: DEFAULT_FILTER } }));
-      // return DEFAULT_FILTER;
+    // check if slugCategory not exist and set slug to be key
+    if (!Object.hasOwn(filters, slugCategory)) {
+      set((state) => ({ filters: { ...state.filters, [slugCategory]: DEFAULT_FILTER } }));
+      return DEFAULT_FILTER;
     }
-    // return filters[category];
+    // if slugCategory already exist return all filters by slugCateory
+    return filters[slugCategory];
   },
+  // function for set value by key slugCategory
+  setFilters: (slugCategory, data) => set((state) => ({ filters: { ...state.filters, [slugCategory]: data } })),
   setCountries: (data) => set({ countries: data }),
   setCites: (data) => set({ cities: data }),
-  setCitySelected: (data) => set({ citySelected: data }),
-  setBudgetSelected: (data) => set({ budgetSelected: data }),
   setBudgets: (data) => set({ budgets: data }),
 }));

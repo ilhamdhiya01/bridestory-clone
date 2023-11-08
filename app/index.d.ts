@@ -16,8 +16,9 @@ export type ModalProps = {
 };
 
 export type CategoryProps = {
-  categoryName: string;
   id: number;
+  // slugCategory: string;
+  categoryName: string;
   selected: boolean;
 };
 
