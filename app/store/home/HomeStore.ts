@@ -22,10 +22,10 @@ export const useHomeStore = create<HomeStore>((set) => ({
         setLoading(false);
       }
       if (data.length > 0) {
-        // only filter valid id
-        set({ vendorCategories: vendors.filter((vendor) => data.includes(vendor.id)) });
+        // only filter valid slug
+        set({ vendorCategories: vendors.filter((vendor) => data.includes(vendor.slug)) });
       } else {
-        set({ vendorCategories: vendors.filter((vendor) => [1, 2, 3].includes(vendor.id)) });
+        // set({ vendorCategories: vendors.filter((vendor) => ['venue', 'wedding-planner', 'fotografi'].includes(vendor.slug)) });
       }
     } catch (error) {
       console.log(error);

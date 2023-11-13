@@ -4,7 +4,7 @@ import CategoryItem from './CategoryItem';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 import SliderMobileVersion from '../../SliderMobileVersion';
 import { CategoryProps } from '@/app';
-import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
+import useLocalStorageArray from '@/app/hooks/useLocalStorage';
 
 type VendorRecomendationListProps = {
   vendors?: CategoryProps[];

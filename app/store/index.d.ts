@@ -9,7 +9,7 @@ export type HomeState = {
 export type HomeAction = {
   setCategories: (data: CategoryProps[]) => void;
   setVendorSelected: (data: CategoryProps[]) => void;
-  setVendorCategories: (data: number[], setLoading: (data: boolean) => void) => void;
+  setVendorCategories: (data: string[], setLoading: (data: boolean) => void) => void;
 };
 
 export type HomeStore = HomeState & HomeAction;

@@ -9,19 +9,22 @@ import { useHomeStore } from './store/home/HomeStore';
 import { CategoryProps, Filter, VendorCategoryProps } from '.';
 import Loading from './components/Loading';
 import { useGlobalStore } from './store/GlobalStore';
-import useLocalStorageArray from './hooks/useLocalStorageArray';
+import useLocalStorageArray from './hooks/useLocalStorage';
 import { useFilterVendorModal } from './hooks/useFilterVendorModal';
+import useLocalStorage from './hooks/useLocalStorage';
 
 const Home = () => {
   const { setVendorCategories, vendorSelected, vendorCategories } = useHomeStore();
   const { setLoading, isLoading } = useGlobalStore();
-  const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
+  const [categorySelected, setCategorySelected] = useLocalStorage<string[]>('vendorSelected', []);
   const { filters } = useFilterVendorModal();
   useEffect(() => {
-    // setTest({ ...test, initialFilter });
     setLoading(true);
-    setVendorCategories(storageVedorSelected?.map((vendor) => vendor.id) || [], setLoading);
-  }, [setVendorCategories, vendorSelected, setLoading, storageVedorSelected]);
+    setVendorCategories(
+      categorySelected.map((category) => category),
+      setLoading
+    );
+  }, [setVendorCategories, vendorSelected, setLoading, categorySelected]);
 
   // let initialFilter = {
   //   categorySlug: '',

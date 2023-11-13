@@ -7,7 +7,7 @@ import { useHomeStore } from '@/app/store/home/HomeStore';
 import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
 import { useCallback, useEffect } from 'react';
 import { CategoryProps } from '@/app';
-import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
+import useLocalStorageArray from '@/app/hooks/useLocalStorage';
 import VendorRecomendationList from './VendorRecomendationList';
 import CategoryItem from './CategoryItem';
 import SliderMobileVersion from '../../SliderMobileVersion';
@@ -15,7 +15,7 @@ import SliderMobileVersion from '../../SliderMobileVersion';
 const VendorRecomendation = () => {
   const { onOpen } = useVendorRecomendationModal();
   const { setCategories, vendorSelected, categories, setVendorSelected } = useHomeStore();
-  const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
+  // const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
 
   const fetchAllCategory = useCallback(async () => {
     try {
@@ -42,7 +42,7 @@ const VendorRecomendation = () => {
     // }
 
     fetchAllCategory();
-  }, [fetchAllCategory, setCategories, setStorageVedorSelected, setVendorSelected, storageVedorSelected.length]);
+  }, [fetchAllCategory, setCategories, setVendorSelected]);
 
   // check vendor selected from localStorage and set selected vendor to true
   const checkVendorSelected = () => {
