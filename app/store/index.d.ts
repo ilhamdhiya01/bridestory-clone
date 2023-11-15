@@ -3,12 +3,10 @@ import { CategoryProps, VendorCategoryProps } from '..';
 export type HomeState = {
   categories: CategoryProps[];
   vendorCategories: VendorCategoryProps[];
-  vendorSelected?: CategoryProps[];
 };
 
 export type HomeAction = {
   setCategories: (data: CategoryProps[]) => void;
-  setVendorSelected: (data: CategoryProps[]) => void;
   setVendorCategories: (data: string[], setLoading: (data: boolean) => void) => void;
 };
 

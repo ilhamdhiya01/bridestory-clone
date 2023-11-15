@@ -1,26 +1,23 @@
 import { create } from 'zustand';
-
-type Category = {
-  slugCategory: string;
-  categoryName: string;
-};
+import { CategoryProps } from '..';
 
 type VendorRecomendationState = {
   isOpen: boolean;
-};
-
-const DEFAULT_SELECTED: Category = {
-  slugCategory: '',
-  categoryName: '',
+  selectedList: CategoryProps[];
+  test: string[];
 };
 
 type VendorRecomendationAction = {
   onClose: () => void;
   onOpen: () => void;
+  setSelectedList: (data: CategoryProps[]) => void;
+  setTest: (data: string[]) => void;
 };
 
 const initialValue: VendorRecomendationState = {
   isOpen: false,
+  selectedList: [],
+  test: [],
 };
 
 type VendorRecomendationStore = VendorRecomendationState & VendorRecomendationAction;
@@ -29,4 +26,6 @@ export const useVendorRecomendationModal = create<VendorRecomendationStore>((set
   ...initialValue,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
+  setSelectedList: (data) => set({ selectedList: data }),
+  setTest: (data) => set({ test: data }),
 }));

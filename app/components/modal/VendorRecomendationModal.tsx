@@ -1,20 +1,18 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useHomeStore } from '@/app/store/home/HomeStore';
-// import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
 import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
 import Modal from './Modal';
 import Container from '../Container';
 import Button from '../Button';
 import VendorRecomendationItem from '../home/vendorRecomendation/VendorRecomendationItem';
-import { CategoryProps, VendorCategoryProps } from '@/app';
 import { useGlobalStore } from '@/app/store/GlobalStore';
 import useLocalStorage from '@/app/hooks/useLocalStorage';
 
 const VendorRecomendationModal = () => {
-  const { isOpen, onClose } = useVendorRecomendationModal();
-  const { categories, setCategories, setVendorSelected, setVendorCategories } = useHomeStore();
+  const { isOpen, onClose, setSelectedList, setTest } = useVendorRecomendationModal();
+  const { categories, setCategories, setVendorCategories } = useHomeStore();
   const { setLoading } = useGlobalStore();
   const [categorySelected, setCategorySelected] = useLocalStorage<string[]>('categorySelected', []);
 
@@ -27,7 +25,7 @@ const VendorRecomendationModal = () => {
         return category;
       })
     );
-  }, [setVendorSelected, categorySelected, isOpen, setCategories]);
+  }, [categorySelected, isOpen, setCategories]);
 
   const handleSelected = useCallback(
     (slugCategory: string) => {
@@ -55,6 +53,7 @@ const VendorRecomendationModal = () => {
       categorySelected.map((category) => category),
       setLoading
     );
+    setSelectedList(categories.filter((category) => categorySelected.includes(category.slug)));
   };
 
   const body = (
