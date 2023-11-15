@@ -18,12 +18,12 @@ export const useHomeStore = create<HomeStore>((set) => ({
       if (response.status === 200) {
         setLoading(false);
       }
-      if (data.length > 0) {
-        // only filter valid slug
-        set({ vendorCategories: vendors.filter((vendor) => data.includes(vendor.slug)) });
-      } else {
-        // set({ vendorCategories: vendors.filter((vendor) => ['venue', 'wedding-planner', 'fotografi'].includes(vendor.slug)) });
-      }
+      set({ vendorCategories: vendors.filter((vendor) => data.includes(vendor.slug)) });
+      // if (data.length > 0) {
+      //   // only filter valid slug
+      // } else {
+      //   // set({ vendorCategories: vendors.filter((vendor) => ['venue', 'wedding-planner', 'fotografi'].includes(vendor.slug)) });
+      // }
     } catch (error) {
       console.log(error);
     }

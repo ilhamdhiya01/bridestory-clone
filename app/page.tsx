@@ -12,17 +12,19 @@ import { useVendorRecomendationModal } from './hooks/useVendorRecomendationModal
 
 const Home = () => {
   const { setVendorCategories, vendorCategories, categories } = useHomeStore();
-  const { selectedList, test } = useVendorRecomendationModal();
+  const { selectedList } = useVendorRecomendationModal();
   const { setLoading, isLoading } = useGlobalStore();
   const [categorySelected, setCategorySelected] = useLocalStorage<string[]>('categorySelected', []);
 
   useEffect(() => {
+    // if (categorySelected.length === 0) {
+    //   setCategorySelected(['venue', 'wedding-planner', 'fotografi']);
+    // }
     setLoading(true);
     setVendorCategories(
       categorySelected.map((category) => category),
       setLoading
     );
-    // setCategorySelected(test);
   }, [setVendorCategories, setLoading, categorySelected, setCategorySelected]);
 
   return (

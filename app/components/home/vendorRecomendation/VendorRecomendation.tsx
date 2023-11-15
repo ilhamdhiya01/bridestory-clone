@@ -16,13 +16,16 @@ type VendorRecomendationProps = {
 };
 
 const VendorRecomendation: React.FC<VendorRecomendationProps> = ({ listSelected }) => {
-  const { onOpen, onClose } = useVendorRecomendationModal();
+  const { onOpen } = useVendorRecomendationModal();
   const { categories, setCategories } = useHomeStore();
   const [categorySelected, setCategorySelected] = useLocalStorage<string[]>('categorySelected', []);
 
   const selected = useMemo(() => {
-    return categories.filter((category) => categorySelected.includes(category.slug));
-  }, [categories, categorySelected]);
+    if (listSelected.length === 0) {
+      return categories.filter((category) => categorySelected.includes(category.slug));
+    }
+    return listSelected;
+  }, [categories, categorySelected, listSelected]);
 
   const fetchAllCategory = useCallback(async () => {
     try {
@@ -51,7 +54,7 @@ const VendorRecomendation: React.FC<VendorRecomendationProps> = ({ listSelected 
       <div className='overflow-x-hidden'>
         <div className='w-full overflow-x-auto no-scrollbar'>
           <SliderMobileVersion>
-            {listSelected.map((category) => (
+            {selected.map((category) => (
               <CategoryItem key={category.id} categoryName={category.categoryName} />
             ))}
           </SliderMobileVersion>

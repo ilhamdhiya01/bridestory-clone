@@ -11,7 +11,7 @@ import { useGlobalStore } from '@/app/store/GlobalStore';
 import useLocalStorage from '@/app/hooks/useLocalStorage';
 
 const VendorRecomendationModal = () => {
-  const { isOpen, onClose, setSelectedList, setTest } = useVendorRecomendationModal();
+  const { isOpen, onClose, setSelectedList } = useVendorRecomendationModal();
   const { categories, setCategories, setVendorCategories } = useHomeStore();
   const { setLoading } = useGlobalStore();
   const [categorySelected, setCategorySelected] = useLocalStorage<string[]>('categorySelected', []);
@@ -69,7 +69,7 @@ const VendorRecomendationModal = () => {
           ))}
         </div>
         <div className='mt-3'>
-          <Button label='Selesai' onClick={handleFilterSelectedCategory} />
+          <Button label='Selesai' disabled={categorySelected.length < 3 ? true : false} onClick={handleFilterSelectedCategory} />
         </div>
       </Container>
     </div>

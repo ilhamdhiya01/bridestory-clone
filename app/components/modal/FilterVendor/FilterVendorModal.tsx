@@ -24,6 +24,7 @@ enum STEPS {
 const FilterVendorModal = () => {
   const [step, setStep] = useState(STEPS.SELECT_FILTER);
   const [isLoading, setLoading] = useState(false);
+  const [citySelected, setCitySelected] = useState(false);
   const [searchCity, setSearchCity] = useState('');
   const { isOpen, onClose, filters, countries, cities, setCountries, setCites, setBudgets, budgets, getFilterBySlugCategory, filterModalData, setFilters } = useFilterVendorModal();
 
@@ -49,11 +50,13 @@ const FilterVendorModal = () => {
   const handleSetCountryCode = (countryCode: string) => {
     setFilters(filterModalData.slugCategory, { ...filter, country: countryCode });
     setStep(STEPS.CITY);
+    setCitySelected(false);
     setSearchCity('');
   };
 
   const handleSelectCity = (cityName: string) => {
     setFilters(filterModalData.slugCategory, { ...filter, city: cityName });
+    setCitySelected(cityName !== null ? true : false);
   };
 
   const handleSetBudget = (budget: string) => {
@@ -105,22 +108,11 @@ const FilterVendorModal = () => {
     try {
       const response = await axios.get('/static/data.json');
       // check if budget already selected set selected budget to be true
-      if (budgets.length !== 0) {
-        const checkSelectedBudget = budgets.map((budget) => {
-          // if (budget.price === filters.budget) {
-          //   return { ...budget, selected: true };
-          // } else {
-          // }
-          return { ...budget, selected: false };
-        });
-        setBudgets(checkSelectedBudget);
-      } else {
-        setBudgets(response.data.budgets);
-      }
+      setBudgets(response.data.budgets);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }, [budgets, setBudgets]);
+  }, [setBudgets]);
 
   useEffect(() => {
     if (step === STEPS.BUDGET) {
@@ -217,7 +209,7 @@ const FilterVendorModal = () => {
           <div className='flex justify-between items-center py-3 relative'>
             <FaChevronLeft size={18} onClick={onSelectCountry} className='text-[#848484]' />
             <h3 className='text-xl text-[#444444] font-bold'>City</h3>
-            <span onClick={onBackSelectFilter} className={`cursor-pointer font-semibold transition duration-150  text-lg ${true ? 'text-[#eba1a1]' : 'text-[#AAAAAA]'}`}>
+            <span onClick={onBackSelectFilter} className={`cursor-pointer font-semibold transition duration-150  text-lg ${citySelected ? 'text-[#eba1a1]' : 'text-[#AAAAAA]'}`}>
               Apply
             </span>
           </div>
