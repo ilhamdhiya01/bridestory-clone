@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type Filter = {
+export type Filter = {
   slugCategory?: string;
   budget?: string;
   country?: string;
@@ -55,7 +55,7 @@ export const DEFAULT_FILTER: Filter = {
   budget: 'All Budget',
   slugCategory: '',
   city: 'Indonesia',
-  country: 'Indonesia',
+  country: 'ID',
 };
 
 const initialValue: FilterVendorState = {

@@ -9,7 +9,8 @@ const Button: React.FC<ButtonProps> = ({ label, onClick, disabled, icon: Icon, o
       disabled={disabled}
       className={`
         relative
-        disabled:opacity-70
+        disabled:bg-[#d9d8d8]
+        disabled:border-[#d9d8d8]
         disabled:cursor-not-allowed
         rounded-lg
         hover:opacity-80

@@ -6,7 +6,7 @@ import { VendorCategoryItemProps } from '@/app';
 
 const VendorCategoryItem: React.FC<VendorCategoryItemProps> = ({ name, slug, image }) => {
   return (
-    <div className='bg-white flex flex-col gap-2 relative w-full box-border cursor-pointer first:ml-4 last:mr-4'>
+    <div className='bg-white flex flex-col gap-2 relative w-full max-w-[140px] box-border cursor-pointer first:ml-4 last:mr-4'>
       <div className='overflow-hidden rounded-xl w-[140px] h-[140px]'>
         <Image src={`/images/product/wedding-planning/${image}`} alt='product image 1' width={500} height={500} className='object-cover w-full h-full' />
       </div>

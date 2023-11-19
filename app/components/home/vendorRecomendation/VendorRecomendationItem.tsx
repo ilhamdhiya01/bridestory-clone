@@ -20,7 +20,7 @@ const VendorRecomendationItem: React.FC<VendorRecomendationItemProps> = ({ onSel
         hover:border-[#eba1a1] 
         cursor-pointer
         active:bg-[#eba1a1]
-        ${selected ? 'bg-[#eba1a1] border-[#eba1a1]' : ''}
+        ${selected && 'bg-[#eba1a1] border-[#eba1a1]'}
         `}
     >
       <span
@@ -28,7 +28,7 @@ const VendorRecomendationItem: React.FC<VendorRecomendationItemProps> = ({ onSel
           transition 
           duration-200 
           group-active:text-white
-          ${selected ? 'text-white' : ''}
+          ${selected && 'text-white'}
           `}
       >
         {categoryName}

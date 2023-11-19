@@ -6,14 +6,11 @@ import { VendorCategoryProps } from '@/app';
 const initialValue: HomeState = {
   categories: [],
   vendorCategories: [],
-  vendorSelected: undefined,
 };
 
 export const useHomeStore = create<HomeStore>((set) => ({
   ...initialValue,
   setCategories: (data) => set({ categories: data }),
-  setVendorSelected: (data) => set({ vendorSelected: data }),
-  // setVendorCategories: (data) => set({ vendorCategories: data }),
   setVendorCategories: async (data, setLoading) => {
     try {
       const response = await axios.get('/api/vendor');
@@ -21,12 +18,12 @@ export const useHomeStore = create<HomeStore>((set) => ({
       if (response.status === 200) {
         setLoading(false);
       }
-      if (data.length > 0) {
-        // only filter valid id
-        set({ vendorCategories: vendors.filter((vendor) => data.includes(vendor.id)) });
-      } else {
-        set({ vendorCategories: vendors.filter((vendor) => [1, 2, 3].includes(vendor.id)) });
-      }
+      set({ vendorCategories: vendors.filter((vendor) => data.includes(vendor.slug)) });
+      // if (data.length > 0) {
+      //   // only filter valid slug
+      // } else {
+      //   // set({ vendorCategories: vendors.filter((vendor) => ['venue', 'wedding-planner', 'fotografi'].includes(vendor.slug)) });
+      // }
     } catch (error) {
       console.log(error);
     }

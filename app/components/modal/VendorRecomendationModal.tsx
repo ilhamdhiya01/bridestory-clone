@@ -1,50 +1,66 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useHomeStore } from '@/app/store/home/HomeStore';
-import useLocalStorageArray from '@/app/hooks/useLocalStorageArray';
 import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
 import Modal from './Modal';
 import Container from '../Container';
 import Button from '../Button';
 import VendorRecomendationItem from '../home/vendorRecomendation/VendorRecomendationItem';
-import { CategoryProps, VendorCategoryProps } from '@/app';
 import { useGlobalStore } from '@/app/store/GlobalStore';
+import useLocalStorage from '@/app/hooks/useLocalStorage';
 
 const VendorRecomendationModal = () => {
-  const { isOpen, onClose } = useVendorRecomendationModal();
-  const { categories, vendorSelected, setCategories, setVendorSelected, setVendorCategories } = useHomeStore();
+  const { isOpen, onClose, setSelectedList } = useVendorRecomendationModal();
+  const { categories, setCategories, setVendorCategories } = useHomeStore();
+  const [disabled, setDisabled] = useState(false);
   const { setLoading } = useGlobalStore();
-  const [storageVedorSelected, setStorageVedorSelected] = useLocalStorageArray<CategoryProps>('vendorSelected', []);
+  const [categorySelected, setCategorySelected] = useLocalStorage<string[]>('categorySelected', []);
 
   useEffect(() => {
-    setVendorSelected(storageVedorSelected);
-  }, [storageVedorSelected, setVendorSelected]);
-
-  const handleVendorSelected = (id: number) => {
-    const clicked = categories.find((item) => item.id === id);
-    if (clicked) {
-      if (storageVedorSelected.some((category) => category.id === id)) {
-        setStorageVedorSelected(storageVedorSelected.filter((category) => category.id !== id));
-      } else {
-        setStorageVedorSelected([...storageVedorSelected, clicked]);
-      }
+    setCategories(
+      categories.map((category) => {
+        if (categorySelected.includes(category.slug)) {
+          return { ...category, selected: true };
+        }
+        return category;
+      })
+    );
+    if (categorySelected.length < 3) {
+      setDisabled(true);
     }
-  };
+    if (categorySelected.length >= 3) {
+      setDisabled(false);
+    }
+  }, [categorySelected, disabled, isOpen, setCategories]);
 
-  // handle select category and change bg when category selected
-  const handleSelected = (index: number) => {
-    const updatedCategories = [...categories];
-    updatedCategories[index].selected = !updatedCategories[index].selected;
-    setCategories(updatedCategories);
-    // get data category selected and store to localStorage
-    handleVendorSelected(updatedCategories[index].id);
-  };
+  const handleSelected = useCallback(
+    (slugCategory: string) => {
+      setCategories(
+        categories.map((category) => {
+          if (category.slug === slugCategory) {
+            if (categorySelected.includes(slugCategory)) {
+              setCategorySelected(categorySelected.filter((slug) => slug !== slugCategory));
+            } else {
+              setCategorySelected([...categorySelected, category.slug]);
+            }
+            return { ...category, selected: !category.selected };
+          }
+          return category;
+        })
+      );
+    },
+    [categories, categorySelected, setCategories, setCategorySelected]
+  );
 
   const handleFilterSelectedCategory = () => {
     onClose();
     setLoading(true);
-    setVendorCategories(storageVedorSelected?.map((vendor) => vendor.id) || [], setLoading);
+    setVendorCategories(
+      categorySelected.map((category) => category),
+      setLoading
+    );
+    setSelectedList(categories.filter((category) => categorySelected.includes(category.slug)));
   };
 
   const body = (
@@ -55,12 +71,12 @@ const VendorRecomendationModal = () => {
           <span className='text-sm text-[#555555]'>Pilih kategori vendor yang sedang Anda cari. Jangan khawatir, Anda bisa mengubahnya setiap saat</span>
         </div>
         <div className='flex flex-row flex-wrap gap-2 mt-4'>
-          {categories.map((category, index) => (
-            <VendorRecomendationItem key={category.id} selected={category.selected} onSelected={() => handleSelected(index)} categoryName={category.categoryName} id={category.id} />
+          {categories.map((category) => (
+            <VendorRecomendationItem key={category.id} selected={category.selected} onSelected={() => handleSelected(category.slug)} categoryName={category.categoryName} id={category.id} />
           ))}
         </div>
         <div className='mt-3'>
-          <Button label='Selesai' onClick={handleFilterSelectedCategory} />
+          <Button label='Selesai' disabled={disabled} onClick={handleFilterSelectedCategory} />
         </div>
       </Container>
     </div>
