@@ -17,9 +17,6 @@ const Home = () => {
   const [categorySelected, setCategorySelected] = useLocalStorage<string[]>('categorySelected', []);
 
   useEffect(() => {
-    // if (categorySelected.length === 0) {
-    //   setCategorySelected(['venue', 'wedding-planner', 'fotografi']);
-    // }
     setLoading(true);
     setVendorCategories(
       categorySelected.map((category) => category),
@@ -33,7 +30,7 @@ const Home = () => {
       <div className='mt-8'>
         <VendorRecomendation listSelected={selectedList} />
       </div>
-      <div className='mt-8 flex flex-col gap-10'>{isLoading ? <Loading /> : vendorCategories.map((vendorCategory) => <VendorCategory key={vendorCategory.id} id={vendorCategory.id} slug={vendorCategory.slug} categoryName={vendorCategory.categoryName} vendors={vendorCategory.vendors} />)}</div>
+      <div className='mt-8 flex flex-col gap-10'>{isLoading ? <Loading /> : vendorCategories.map((vendorCategory) => <VendorCategory key={vendorCategory.slug} slug={vendorCategory.slug} categoryName={vendorCategory.categoryName} vendors={vendorCategory.vendors} />)}</div>
       <br />
       <br />
       <br />

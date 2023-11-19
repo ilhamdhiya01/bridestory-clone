@@ -2,7 +2,7 @@
 
 import { AiOutlineClose } from 'react-icons/ai';
 import Modal from '../Modal';
-import { DEFAULT_FILTER, useFilterVendorModal } from '@/app/hooks/useFilterVendorModal';
+import { DEFAULT_FILTER, useFilterVendorModal, Filter } from '@/app/hooks/useFilterVendorModal';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import Container from '../../Container';
 import Button from '../../Button';
@@ -25,6 +25,11 @@ const FilterVendorModal = () => {
   const [step, setStep] = useState(STEPS.SELECT_FILTER);
   const [isLoading, setLoading] = useState(false);
   const [citySelected, setCitySelected] = useState(false);
+  const [currentFilter, setCurrentFilter] = useState<Filter>({
+    budget: '',
+    country: '',
+    city: '',
+  });
   const [searchCity, setSearchCity] = useState('');
   const { isOpen, onClose, filters, countries, cities, setCountries, setCites, setBudgets, budgets, getFilterBySlugCategory, filterModalData, setFilters } = useFilterVendorModal();
 
@@ -49,6 +54,7 @@ const FilterVendorModal = () => {
 
   const handleSetCountryCode = (countryCode: string) => {
     setFilters(filterModalData.slugCategory, { ...filter, country: countryCode });
+    // setCurrentFilter({...currentFilter, country: countryCode});
     setStep(STEPS.CITY);
     setCitySelected(false);
     setSearchCity('');
@@ -56,11 +62,13 @@ const FilterVendorModal = () => {
 
   const handleSelectCity = (cityName: string) => {
     setFilters(filterModalData.slugCategory, { ...filter, city: cityName });
+    // setCurrentFilter({...currentFilter, city: cityName});
     setCitySelected(cityName !== null ? true : false);
   };
 
   const handleSetBudget = (budget: string) => {
     setFilters(filterModalData.slugCategory, { ...filter, budget: budget });
+    // setCurrentFilter({...currentFilter, budget: budget});
     onBackSelectFilter();
   };
 
@@ -107,7 +115,6 @@ const FilterVendorModal = () => {
   const fetchBudget = useCallback(async () => {
     try {
       const response = await axios.get('/static/data.json');
-      // check if budget already selected set selected budget to be true
       setBudgets(response.data.budgets);
     } catch (error) {
       console.error('Error fetching data:', error);

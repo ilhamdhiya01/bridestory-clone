@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useHomeStore } from '@/app/store/home/HomeStore';
 import { useVendorRecomendationModal } from '@/app/hooks/useVendorRecomendationModal';
 import Modal from './Modal';
@@ -13,6 +13,7 @@ import useLocalStorage from '@/app/hooks/useLocalStorage';
 const VendorRecomendationModal = () => {
   const { isOpen, onClose, setSelectedList } = useVendorRecomendationModal();
   const { categories, setCategories, setVendorCategories } = useHomeStore();
+  const [disabled, setDisabled] = useState(false);
   const { setLoading } = useGlobalStore();
   const [categorySelected, setCategorySelected] = useLocalStorage<string[]>('categorySelected', []);
 
@@ -25,7 +26,13 @@ const VendorRecomendationModal = () => {
         return category;
       })
     );
-  }, [categorySelected, isOpen, setCategories]);
+    if (categorySelected.length < 3) {
+      setDisabled(true);
+    }
+    if (categorySelected.length >= 3) {
+      setDisabled(false);
+    }
+  }, [categorySelected, disabled, isOpen, setCategories]);
 
   const handleSelected = useCallback(
     (slugCategory: string) => {
@@ -69,7 +76,7 @@ const VendorRecomendationModal = () => {
           ))}
         </div>
         <div className='mt-3'>
-          <Button label='Selesai' disabled={categorySelected.length < 3 ? true : false} onClick={handleFilterSelectedCategory} />
+          <Button label='Selesai' disabled={disabled} onClick={handleFilterSelectedCategory} />
         </div>
       </Container>
     </div>

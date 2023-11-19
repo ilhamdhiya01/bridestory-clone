@@ -49,7 +49,6 @@ export type VendorCategoryItemProps = {
 };
 
 export type VendorCategoryProps = {
-  id: number;
   slug: string;
   categoryName: string;
   vendors: Vendors[];
