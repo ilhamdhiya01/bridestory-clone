@@ -7,3 +7,12 @@ body,
 :root {
   height: 100%;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer/Edge */
+}
